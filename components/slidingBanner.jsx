@@ -32,13 +32,14 @@ const SlidingBanner = () => {
     }, [slides.length]);
 
     return (
-        <div className="bg-[#00b1eb] h-[501px] w-full relative">
+        <div className="bg-[#00b1eb] border-b-2 border-[#0d4785] h-[501px] w-full relative">
             {slides.map((slide, index) => (
                 <div
                     key={index}
                     className={`slide h-full transition-all ease-in-out delay-150 duration-1000 ${index === currentSlide ? 'active' : ''}`}
                     style={{
                         display: index === currentSlide ? 'block' : 'none',
+                        opacity: index === currentSlide ? 1 : 0,
                     }}>
                     <video
                         autoPlay
@@ -62,9 +63,14 @@ const SlidingBanner = () => {
                             </p>
                             <button
                                 type="button"
-                                className="bg-[#0d4785] p-3 rounded-md text-white mt-12"
+                                className="bg-[#0d4785] p-3 rounded-md text-white mt-12 relative"
                             >
                                 {slide.buttonLabel}
+
+                                <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                                </span>
                             </button>
                         </div>
                     </div></div>
