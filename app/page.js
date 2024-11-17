@@ -1,4 +1,5 @@
 import RecentOpportunities from "@/components/recentOpportunities";
+import { Services } from "@/components/services";
 import SlidingBanner from "@/components/slidingBanner";
 import TravelFilter from "@/components/travelFilter";
 import Image from "next/image";
@@ -147,9 +148,11 @@ export default function Home() {
 
       <div className="relative bg-[url('/bg1.png')]">
         <TravelFilter />
-<span className="h-[150px] block"></span>
+        <span className="h-[150px] block"></span>
         <RecentOpportunities />
       </div>
+
+      <Services />
     </div>
   );
 }

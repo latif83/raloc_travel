@@ -73,6 +73,15 @@ const RecentOpportunities = () => {
                             <div className='p-2 py-4'>
                                 <h3 className="font-semibold text-lg">{opportunity.title}</h3>
                                 <p className="text-sm text-gray-600">Deadline: {opportunity.deadline}</p>
+                                <button type='button' className='text-blue-600 text-sm hover:underline hover:text-red-600 transition duration-500 flex items-center gap-1.5 mt-2'>
+                                    <span>
+                                        View More and Apply
+                                    </span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                    </svg>
+
+                                </button>
                             </div>
                         </div>
                     ))}
