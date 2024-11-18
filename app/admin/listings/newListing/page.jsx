@@ -1,7 +1,22 @@
 "use client"
 import Image from "next/image";
 import { useRouter } from "next/navigation"
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { db } from "@/Firebase/config";
+import {
+    addDoc,
+    collection,
+    deleteDoc,
+    doc,
+    getDocs,
+    updateDoc,
+} from "firebase/firestore";
+import { imageDb } from "@/Firebase/config";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
+import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default function NewListing() {
 
@@ -13,23 +28,54 @@ export default function NewListing() {
         description: '',
         deadline: '',
         requirements: [],
-        listingBase64Image: ''
+        listingImagePreview: '',
+        listingImageFile: '',
+        listingImage: ''
     })
 
+    const [loading, setLoading] = useState(false)
+
+    const handleSubmit = async (e) => {
+        try {
+            e.preventDefault()
+            setLoading(true)
+            const imgRef = ref(imageDb, `raloc/travels/listings/${v4()}`);
+            const uploadImage = await uploadBytes(imgRef, formData.serviceImageFile);
+            const getImageUrl = await getDownloadURL(uploadImage.ref);
+
+            const data = {
+                listing: formData.listing, service: formData.service, description: formData.description, requirements: formData.requirements, deadline: new Date(formData.deadline).toISOString(), listingImage: getImageUrl, createdAt: new Date().toISOString()
+            }
+
+            const addListing = await addDoc(collection(db, `raloc/travels/listings`), data);
+
+            if (addListing?.id) {
+                toast.success('New offer created successfully!')
+                router.back()
+            } else {
+                toast.error('Unexpected error while adding offer, please try again later!')
+            }
+        }
+        catch (e) {
+            console.log(e)
+            toast.error('Internal server error!')
+        } finally {
+            setLoading(false)
+        }
+
+    }
+
     const handleSelectImage = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
+        const selectedImage = e.target.files[0];
 
-                setFormData((prevData) => ({ ...prevData, listingBase64Image: reader.result }));
-
-                // console.log(reader.result)
-                // setCropping(true);
-            };
-            reader.readAsDataURL(file);
+        if (selectedImage) {
+            // Create a preview URL htmlFor the selected image
+            const previewURL = URL.createObjectURL(selectedImage);
+            setFormData((prevData) => ({ ...prevData, listingImagePreview: previewURL, listingImageFile: selectedImage }));
         }
     };
+
+    const reqRef = useRef(null);
 
     return (
         <div className="sm:py-8 sm:px-5 py-4 px-3">
@@ -47,74 +93,97 @@ export default function NewListing() {
                 <h2 className="text-2xl font-semibold mb-5">New Listing</h2>
             </div>
 
-            <div className="grid grid-cols-3 gap-6">
-                <div className="col-span-2 pt-1">
+            <form onSubmit={handleSubmit}>
 
-                    <div className="mb-4">
-                        <label htmlFor="serviceType" className="block mb-2 text-sm font-medium text-gray-900">Select Service</label>
-                        <select id="serviceType" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-                            <option>Select Service</option>
-                            <option>Work Abroad</option>
-                            <option>Study</option>
-                        </select>
+                <div className="grid grid-cols-3 gap-6">
+                    <div className="col-span-2 pt-1">
+
+                        <div className="mb-4">
+                            <label htmlFor="serviceType" className="block mb-2 text-sm font-medium text-gray-900">Select Service</label>
+                            <select id="serviceType" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required value={formData.service} onChange={(e) => setFormData(prevData => ({ ...prevData, service: e.target.value }))}>
+                                <option>Select Service</option>
+                                <option>Work Abroad</option>
+                                <option>Study</option>
+                            </select>
+                        </div>
+
+                        <div className="mb-4">
+                            <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900">Listing Title:</label>
+                            <input type="text" id="title" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="e.g University Scholarship in Canada" required value={formData.listing} onChange={(e) => setFormData(prevData => ({ ...prevData, listing: e.target.value }))} />
+                        </div>
+
+                        <div className="mb-4">
+                            <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900">Description:</label>
+                            <textarea id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Leave a description of the offer..." required value={formData.description} onChange={(e) => setFormData(prevData => ({ ...prevData, description: e.target.value }))}></textarea>
+                        </div>
+
+                        <div className="mb-5">
+                            <label htmlFor="deadline" className="block mb-2 text-sm font-medium text-gray-900">Deadline:</label>
+                            <input type="date" id="deadline" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required value={formData.deadline} onChange={(e) => setFormData(prevData => ({ ...prevData, deadline: e.target.value }))} />
+                        </div>
+
+                        <div className="mb-5">
+                            <label htmlFor="text" className="block mb-2 text-sm font-medium text-gray-900">Requirements:</label>
+                            <div className="flex flex-col gap-1 text-sm text-gray-400 mb-1">
+                                {formData.requirements.length > 0 && formData.requirements.map((req, index) => (
+                                    <span key={index}>{`${index + 1}. ${req}`}</span>
+                                ))}
+                            </div>
+                            <input ref={reqRef} type="text" id="text" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Requirements for this offer..." />
+                            <div className="flex justify-between items-center mt-1">
+
+                                <button onClick={() => {
+
+                                    const newRequirement = reqRef.current.value.trim()
+
+                                    if (newRequirement) {
+                                        setFormData((prevData) => ({ ...prevData, requirements: [...prevData.requirements, newRequirement] }))
+                                    }
+
+                                    reqRef.current.value = ""
+                                }} type="button" className="text-blue-500 underline text-sm">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Listing Title:</label>
-                        <input type="email" id="email" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="e.g University Scholarship in Canada" required />
-                    </div>
+                    <div className="col-span-1">
+                        <input id="serviceImage" hidden type="file" accept="image/*"
+                            onChange={handleSelectImage} />
+                        {formData.listingImagePreview ? <div className="w-full h-56 border-2 border-dotted flex flex-col items-center justify-center rounded-md text-gray-400 gap-2 cursor-pointer hover:border-red-500 transition duration-500 relative"> <Image src={formData.listingImagePreview} className="w-full h-full object-cover" width={1000} height={1000} alt="service image" /> <div className="absolute -bottom-3 w-full flex justify-center"> <button type="button" onClick={() => setFormData((prevData) => ({ ...prevData, listingImagePreview: '', listingImageFile: '' }))} className="p-2 rounded-md bg-red-600 hover:bg-red-400 text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                            </svg>
 
-                    <div className="mb-4">
-                        <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900">Description:</label>
-                        <textarea id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Leave a description of the offer..." required></textarea>
-                    </div>
+                        </button> </div> </div> : <label htmlFor="serviceImage" className="w-full h-56 border-2 border-dotted flex flex-col items-center justify-center rounded-md text-gray-400 gap-2 cursor-pointer hover:border-black hover:text-black transition duration-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 w-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
 
-                    <div className="mb-5">
-                        <label htmlFor="deadline" className="block mb-2 text-sm font-medium text-gray-900">Deadline:</label>
-                        <input type="date" id="deadline" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                    </div>
+                            <span>
+                                Listing Image
+                            </span>
 
-                    <div className="mb-5">
-                        <label htmlFor="text" className="block mb-2 text-sm font-medium text-gray-900">Requirements:</label>
-                        <input type="text" id="text" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Requirements for this offer..." required />
-                        <button type="button" className="text-red-500 underline text-sm">
-                            New Requirement
-                        </button>
+                        </label>}
+
                     </div>
                 </div>
 
-                <div className="col-span-1">
-                    <input id="serviceImage" hidden type="file" accept="image/*"
-                        onChange={handleSelectImage} />
-                    {formData.listingBase64Image ? <div className="w-full h-56 border-2 border-dotted flex flex-col items-center justify-center rounded-md text-gray-400 gap-2 cursor-pointer hover:border-red-500 transition duration-500 relative"> <Image src={formData.listingBase64Image} className="w-full h-full object-cover" width={1000} height={1000} alt="service image" /> <div className="absolute -bottom-3 w-full flex justify-center"> <button type="button" onClick={() => setFormData((prevData) => ({ ...prevData, listingBase64Image: '' }))} className="p-2 rounded-md bg-red-600 hover:bg-red-400 text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                <div className="mt-8">
+                    <button type="submit" disabled={loading} className="p-2 rounded-md bg-indigo-600 hover:bg-indigo-400 text-white flex items-center justify-center gap-1 disabled:bg-indigo-300">
+                        {loading ? <>
+                            <FontAwesomeIcon icon={faSpinner} spin width={20} height={20} />
+                            <span>Loading...</span>
+                        </> : <><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m15 11.25-3-3m0 0-3 3m3-3v7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
-
-                    </button> </div> </div> : <label htmlFor="serviceImage" className="w-full h-56 border-2 border-dotted flex flex-col items-center justify-center rounded-md text-gray-400 gap-2 cursor-pointer hover:border-black hover:text-black transition duration-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 w-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-
-                        <span>
-                            Listing Image
-                        </span>
-
-                    </label>}
-
+                            <span>
+                                Add Offer
+                            </span></>}
+                    </button>
                 </div>
-            </div>
-
-            <div className="mt-8">
-                <button type="button" className="p-2 rounded-md bg-indigo-600 hover:bg-indigo-400 text-white flex items-center justify-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m15 11.25-3-3m0 0-3 3m3-3v7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                    <span>
-                        Add Offer
-                    </span>
-                </button>
-            </div>
+            </form>
 
         </div>
     )
