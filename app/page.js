@@ -1,3 +1,6 @@
+import { Contact } from "@/components/Contact";
+import { Footer } from "@/components/footer";
+import { Gallery } from "@/components/gallery";
 import RecentOpportunities from "@/components/recentOpportunities";
 import { Services } from "@/components/services";
 import SlidingBanner from "@/components/slidingBanner";
@@ -153,6 +156,13 @@ export default function Home() {
       </div>
 
       <Services />
+
+      <Gallery />
+
+      <Contact />
+
+      <Footer />
+
     </div>
   );
 }
