@@ -16,7 +16,7 @@ export const AdminSidebar = () => {
         <>
             {openSidebar && <div className="bg-[#0d4785] w-[230px] shrink-0 sticky top-0 h-svh transition duration-1000">
                 <div className="p-3 flex flex-col gap-2 justify-center items-center border-b-2 border-dotted" >
-                    <Image src={'/logo.png'} width={500} height={500} className="w-[50px] h-auto bg-white rounded p-2" />
+                    <Image src={'/logo.png'} width={500} height={500} className="w-[50px] h-auto bg-white rounded p-2" alt="logo" />
                     <span className="text-xs text-gray-50">
                         Travel far, live fully
                     </span>

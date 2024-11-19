@@ -1,13 +1,14 @@
 "use client"
 import Image from "next/image";
 import { useRouter } from "next/navigation"
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState, use } from "react";
 import { db } from "@/Firebase/config";
 import {
     addDoc,
     collection,
     deleteDoc,
     doc,
+    getDoc,
     getDocs,
     updateDoc,
 } from "firebase/firestore";
@@ -18,7 +19,9 @@ import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-export default function NewListing() {
+export default function EditListing({ params }) {
+
+    const { listingId } = use(params)
 
     const router = useRouter()
 
@@ -35,26 +38,85 @@ export default function NewListing() {
 
     const [loading, setLoading] = useState(false)
 
+    useEffect(() => {
+        const getListingData = async () => {
+            try {
+
+                const docRef = doc(db, "raloc/travels/listings", listingId);
+                const docSnap = await getDoc(docRef);
+
+                const resultsData = docSnap.data()
+
+                if (resultsData) {
+
+                    const isoDate = resultsData.deadline;
+                    const dateObj = new Date(isoDate);
+
+                    // Extract year, month, and day
+                    const year = dateObj.getFullYear();
+                    const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+                    const day = String(dateObj.getDate()).padStart(2, '0');
+
+                    // Combine them into the desired format
+                    const formattedDate = `${year}-${month}-${day}`;
+
+
+                    setFormData((prevData) => ({ ...prevData, listing: resultsData.listing, service: resultsData.service, deadline: formattedDate, description: resultsData.description, listingImagePreview: resultsData.listingImage, listingImage: resultsData.listingImage, id: resultsData.id, requirements: resultsData.requirements }))
+                } else {
+                    // docSnap.data() will be undefined in this case
+                    // console.log("No such document!");
+                    toast.error('An unexpected error happened')
+                    router.back()
+                }
+
+                // const getData = await getDoc(
+                //     collection(db, "raloc/travels/service")
+                // );
+
+                // const servicesData = getServicesDataRequest.docs.map((doc) => ({
+                //     id: doc.id,
+                //     ...doc.data(),
+                // }));
+
+
+            } catch (e) {
+                console.log(e)
+                toast.error("Internal server error!")
+                router.back()
+            }
+        }
+
+        getListingData()
+    }, [])
+
     const handleSubmit = async (e) => {
         try {
             e.preventDefault()
             setLoading(true)
-            const imgRef = ref(imageDb, `raloc/travels/listings/${v4()}`);
-            const uploadImage = await uploadBytes(imgRef, formData.listingImageFile);
-            const getImageUrl = await getDownloadURL(uploadImage.ref);
+
+            let getImageUrl;
+
+            if (formData.listingImageFile) {
+                const imgRef = ref(imageDb, `raloc/travels/listings/${v4()}`);
+                const uploadImage = await uploadBytes(imgRef, formData.listingImageFile);
+                getImageUrl = await getDownloadURL(uploadImage.ref);
+            } else if (!formData.listingImageFile && !formData.listingImagePreview) {
+                toast.error("Please select and image!");
+                return
+            }
 
             const data = {
-                listing: formData.listing, service: formData.service, description: formData.description, requirements: formData.requirements, deadline: new Date(formData.deadline).toISOString(), listingImage: getImageUrl, createdAt: new Date().toISOString()
+                listing: formData.listing, service: formData.service, description: formData.description, requirements: formData.requirements, deadline: new Date(formData.deadline).toISOString(), listingImage: getImageUrl ? getImageUrl : formData.listingImage, updatedAt: new Date().toISOString()
             }
 
-            const addListing = await addDoc(collection(db, `raloc/travels/listings`), data);
+            // Reference to the document
+            const docRef = doc(db, `raloc/travels/listings/${listingId}`);
 
-            if (addListing?.id) {
-                toast.success('New offer created successfully!')
-                router.back()
-            } else {
-                toast.error('Unexpected error while adding offer, please try again later!')
-            }
+            await updateDoc(docRef, data);
+
+            toast.success('Offer updated successfully!')
+            router.back()
+
         }
         catch (e) {
             console.log(e)
@@ -90,7 +152,7 @@ export default function NewListing() {
                         Back
                     </span>
                 </button>
-                <h2 className="text-2xl font-semibold mb-5">New Listing</h2>
+                <h2 className="text-2xl font-semibold mb-5">Edit Offer</h2>
             </div>
 
             <form onSubmit={handleSubmit}>
@@ -151,7 +213,7 @@ export default function NewListing() {
                     <div className="col-span-1">
                         <input id="serviceImage" hidden type="file" accept="image/*"
                             onChange={handleSelectImage} />
-                        {formData.listingImagePreview ? <div className="w-full h-56 border-2 border-dotted flex flex-col items-center justify-center rounded-md text-gray-400 gap-2 cursor-pointer hover:border-red-500 transition duration-500 relative"> <Image src={formData.listingImagePreview} className="w-full h-full object-cover" width={1000} height={1000} alt="service image" /> <div className="absolute -bottom-3 w-full flex justify-center"> <button type="button" onClick={() => setFormData((prevData) => ({ ...prevData, listingImagePreview: '', listingImageFile: '' }))} className="p-2 rounded-md bg-red-600 hover:bg-red-400 text-white">
+                        {formData.listingImagePreview ? <div className="w-full h-56 border-2 border-dotted flex flex-col items-center justify-center rounded-md text-gray-400 gap-2 cursor-pointer hover:border-red-500 transition duration-500 relative"> <img src={formData.listingImagePreview} className="w-full h-full object-cover" width={1000} height={1000} alt="service image" /> <div className="absolute -bottom-3 w-full flex justify-center"> <button type="button" onClick={() => setFormData((prevData) => ({ ...prevData, listingImagePreview: '', listingImageFile: '' }))} className="p-2 rounded-md bg-red-600 hover:bg-red-400 text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                             </svg>
@@ -179,7 +241,7 @@ export default function NewListing() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="m15 11.25-3-3m0 0-3 3m3-3v7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                             <span>
-                                Add Offer
+                                Save Changes
                             </span></>}
                     </button>
                 </div>

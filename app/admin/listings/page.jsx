@@ -1,45 +1,55 @@
+"use client"
+import { db } from "@/Firebase/config";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { collection, getDocs } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { ListingDetails } from "./listingDetails";
 
 export default function Listings() {
 
-    // Sample list of opportunities
-    const opportunities = [
-        {
-            image: 'https://i.pinimg.com/236x/25/30/04/25300440c5b32795f496a5f1e9425f7d.jpg',
-            title: 'Internship in Paris',
-            type: 'Work Abroad',
-            deadline: '2024-12-15',
-        },
-        {
-            image: 'https://i.pinimg.com/736x/2f/fa/c3/2ffac39acf2ae7a5793a9290b1d83a85.jpg',
-            title: 'Cultural Exchange Program in Japan',
-            type: 'Tour',
-            deadline: '2024-11-30',
-        },
-        {
-            image: 'https://i.pinimg.com/474x/f8/f7/2d/f8f72db32fb076c5cc99b9ef79381165.jpg',
-            title: 'University Scholarship in Canada',
-            type: 'Study Abroad',
-            deadline: '2025-01-10',
-        },
-        {
-            image: 'https://i.pinimg.com/474x/b7/f9/3f/b7f93ffbc3c6b594b9286bc688861bd0.jpg',
-            title: 'Work and Travel USA',
-            type: 'Work Abroad',
-            deadline: '2025-03-01',
-        },
-        {
-            image: 'https://i.pinimg.com/236x/bc/84/80/bc8480d1984b8c4a49d2a6c3a90efe1a.jpg',
-            title: 'Volunteer Program in South Africa',
-            type: 'Tour',
-            deadline: '2024-12-20',
-        },
-    ];
+    const [loading, setLoading] = useState(true)
+
+    const [offers, setOffers] = useState([])
+
+    useEffect(() => {
+
+        const getOffers = async () => {
+            try {
+
+                const getOffersDataRequest = await getDocs(
+                    collection(db, "raloc/travels/listings")
+                );
+
+                const offersData = getOffersDataRequest.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+
+                setOffers(offersData)
+
+            }
+            catch (e) {
+                console.log(e)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        getOffers()
+
+    }, [])
+
+    const [viewOffer, setViewOffer] = useState(false)
+
+    const [offerData, setOfferData] = useState({})
 
     return (
         <div className="sm:py-8 sm:px-5 py-4 px-3">
 
+            {viewOffer && <ListingDetails listingData={offerData} setViewOffer={setViewOffer} />}
 
             <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-semibold mb-5">Listings</h2>
@@ -56,11 +66,16 @@ export default function Listings() {
 
             <div className="grid grid-cols-3 gap-4 mt-8">
 
-                {opportunities.map((opp, index) => (
+                {loading ? <div className="col-span-3 flex flex-col items-center justify-center gap-2">
+                    <FontAwesomeIcon icon={faSpinner} width={30} height={30} className="text-lg" spin />
+                    <span>
+                        Loading Data...
+                    </span>
+                </div> : offers.length > 0 ? offers.map((opp, index) => (
                     <div key={index} className="rounded overflow-hidden shadow">
-                        <img src={opp.image} width={600} height={600} className="w-full h-32 object-cover" alt={opp.title} />
+                        <img src={opp.listingImage} width={600} height={600} className="w-full h-40 object-cover" alt={opp.listing} />
                         <div className="p-3 text-center">
-                            <h2 className="font-bold">{opp.title}</h2>
+                            <h2 className="font-bold">{opp.listing}</h2>
                             <p className="flex flex-col items-center justify-center gap-1">
                                 <span className="font-medium">
                                     Deadline:
@@ -81,7 +96,10 @@ export default function Listings() {
                                 </span>
                             </p>
 
-                            <button type="button" className="p-3 flex mx-auto items-center justify-center gap-1.5 text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white transition duration-500 mt-2 rounded-xl">
+                            <button onClick={()=>{
+                                setOfferData(opp)
+                                setViewOffer(true)
+                            }} type="button" className="p-3 flex mx-auto items-center justify-center gap-1.5 text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white transition duration-500 mt-2 rounded-xl">
                                 <span>
                                     Manage
                                 </span>
@@ -91,7 +109,16 @@ export default function Listings() {
 
                             </button>
                         </div>
-                    </div>))}
+                    </div>)) : <div className="col-span-3 flex flex-col items-center justify-center gap-2">
+
+                    <span>
+                        No offers Found
+                    </span>
+
+                    <Link href="/admin/listings/newListing" className="bg-black text-white hover:bg-gray-700 p-2 rounded-md">
+                        New Offer
+                    </Link>
+                </div>}
 
             </div>
 
