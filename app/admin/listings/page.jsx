@@ -14,6 +14,8 @@ export default function Listings() {
 
     const [offers, setOffers] = useState([])
 
+    const [fetchData, setFetchData] = useState(true)
+
     useEffect(() => {
 
         const getOffers = async () => {
@@ -38,9 +40,12 @@ export default function Listings() {
             }
         }
 
-        getOffers()
+        if (fetchData) {
+            getOffers()
+            setFetchData(false)
+        }
 
-    }, [])
+    }, [fetchData])
 
     const [viewOffer, setViewOffer] = useState(false)
 
@@ -49,7 +54,7 @@ export default function Listings() {
     return (
         <div className="sm:py-8 sm:px-5 py-4 px-3">
 
-            {viewOffer && <ListingDetails listingData={offerData} setViewOffer={setViewOffer} />}
+            {viewOffer && <ListingDetails listingData={offerData} setViewOffer={setViewOffer} setFetchData={setFetchData} />}
 
             <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-semibold mb-5">Listings</h2>
@@ -96,7 +101,7 @@ export default function Listings() {
                                 </span>
                             </p>
 
-                            <button onClick={()=>{
+                            <button onClick={() => {
                                 setOfferData(opp)
                                 setViewOffer(true)
                             }} type="button" className="p-3 flex mx-auto items-center justify-center gap-1.5 text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white transition duration-500 mt-2 rounded-xl">
