@@ -69,12 +69,7 @@ export default function Services() {
 
             <div className="grid grid-cols-3 gap-4 mt-8">
 
-                {loading ? <div className="col-span-3 flex flex-col items-center justify-center gap-2">
-                    <FontAwesomeIcon icon={faSpinner} width={30} height={30} className="text-lg" spin />
-                    <span>
-                        Loading Data...
-                    </span>
-                </div> : services.length > 0 ? services.map((service, index) => (<div key={index} className="bg-indigo-100 rounded overflow-hidden">
+                {loading ? [1, 2, 3].map((n, index) => (<div key={index} className="bg-indigo-100 rounded overflow-hidden"> <div className="h-40 animate-pulse bg-gray-50"> </div> <div className="p-3"> <h3 className="bg-gray-50 animate-pulse mx-auto w-32 h-4 rounded"></h3> <p className="bg-gray-50 animate-pulse mx-auto w-32 h-4 mt-1 rounded"></p> <div className="flex justify-between mt-5"> <div className="w-28 h-6 bg-gray-50 animate-pulse rounded"> </div> <div className="w-28 h-6 bg-gray-50 animate-pulse rounded"> </div> </div> </div> </div>)) : services.length > 0 ? services.map((service, index) => (<div key={index} className="bg-indigo-100 rounded overflow-hidden">
                     <div>
                         <img src={service.serviceImage} width={500} height={500} className="w-full h-40 object-cover" alt="image" />
                     </div>

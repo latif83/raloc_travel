@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export const Services = () => {
     return (
-        <div className="p-12">
+        <div id="services" className="p-12">
             <h2 className="text-2xl font-bold text-center">OUR SERVICES</h2>
             <hr className="h-1 w-8 bg-black mx-auto rounded-xl" />
 

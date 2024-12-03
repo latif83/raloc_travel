@@ -1,4 +1,49 @@
+"use client"
+import { db } from "@/Firebase/config";
+import { collection, getCountFromServer } from "firebase/firestore";
+import { useEffect, useState } from "react"
+import { toast } from "react-toastify";
+
 export default function AdminDashboard() {
+
+    const [loading, setLoading] = useState(true)
+
+    const [serviceCounts, setServiceCounts] = useState(0)
+    const [listingCounts, setListingCounts] = useState(0)
+
+    // Reusable function to fetch counts
+    const fetchCount = async (collectionPath) => {
+        try {
+            const collectionRef = collection(db, collectionPath);
+            const snapshot = await getCountFromServer(collectionRef);
+            return snapshot.data().count;
+        } catch (error) {
+            console.log(error)
+            // console.error(`Error fetching count for ${collectionPath}:`, error);
+            toast.error("Internal server error!")
+            return 0; // Fallback count in case of error
+        }
+    };
+
+    useEffect(() => {
+        const getCounts = async () => {
+            try {
+                const serviceCount = await fetchCount("raloc/travels/service");
+                setServiceCounts(serviceCount);
+
+                const listingCount = await fetchCount("raloc/travels/listing");
+                setListingCounts(listingCount);
+            } catch (e) {
+                console.log(e)
+                toast.error("Internal server error!")
+            } finally {
+                setLoading(false)
+            }
+        };
+
+        getCounts();
+    }, []);
+
     return (
         <div className="px-5 py-5">
             <h1 className="text-gray-900 text-2xl font-bold mb-5">Dashboard</h1>
@@ -15,7 +60,7 @@ export default function AdminDashboard() {
 
                     </div>
                     {/* {loading ? <span className="w-32 h-6 animate-pulse bg-gray-300 block mt-3 rounded-md"></span> : <p className="text-2xl font-bold text-gray-800">{summaryData?.totalUsers}</p>} */}
-                    <span>6</span>
+                    <p className="text-2xl font-bold text-gray-800">6</p>
                 </div>
 
                 {/* Active Subscribers */}
@@ -28,8 +73,7 @@ export default function AdminDashboard() {
                         </svg>
 
                     </div>
-                    <span>5</span>
-                    {/* {loading ? <span className="w-32 h-6 animate-pulse bg-gray-300 block mt-3 rounded-md"></span> : <p className="text-2xl font-bold text-gray-800">950</p>} */}
+                    {loading ? <span className="w-32 h-6 animate-pulse bg-gray-300 block mt-3 rounded-md"></span> : <p className="text-2xl font-bold text-gray-800">{serviceCounts}</p>}
                 </div>
 
                 {/* Total Trade Signals */}
@@ -42,8 +86,7 @@ export default function AdminDashboard() {
                         </svg>
 
                     </div>
-                    {/* {loading ? <span className="w-32 h-6 animate-pulse bg-gray-300 block mt-3 rounded-md"></span> : <p className="text-2xl font-bold text-gray-800">{summaryData?.totalTradeSignals}</p>} */}
-                    <span>12</span>
+                    {loading ? <span className="w-32 h-6 animate-pulse bg-gray-300 block mt-3 rounded-md"></span> : <p className="text-2xl font-bold text-gray-800">{listingCounts}</p>}
                 </div>
 
 

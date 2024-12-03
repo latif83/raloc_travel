@@ -1,4 +1,5 @@
 import { Contact } from "@/components/Contact";
+import { Feedback } from "@/components/feedback";
 import { Footer } from "@/components/footer";
 import { Gallery } from "@/components/gallery";
 import RecentOpportunities from "@/components/recentOpportunities";
@@ -108,16 +109,19 @@ export default function Home() {
           <div className="absolute top-12 bg-[#00b1eb] border-t border-b border-[#00b1eb] w-full left-0"></div>
 
           <div className="flex gap-4 text-sm font-medium pt-2 relative z-50">
-            <Link href={"#"} className="bg-white p-2">
+            <Link href={"/"} className="bg-white p-2">
               HOME
             </Link>
-            <Link href={"#"} className="bg-white p-2">
-              ABOUT US
+            <Link href={"#getInTouch"} className="bg-white p-2">
+              CONTACT US
             </Link>
-            <Link href={"#"} className="bg-white p-2">
+            <Link href={"#services"} className="bg-white p-2">
               OUR SERVICES
             </Link>
-            <Link href={"#"} className="bg-white p-2">
+            <Link href={"#testimonials"} className="bg-white p-2">
+              TESTIMONIALS
+            </Link>
+            <Link href={"#offers"} className="bg-white p-2">
               OFFERS
             </Link>
           </div>
@@ -125,7 +129,7 @@ export default function Home() {
           <div className="pt-2 relative z-50">
             <button
               type="button"
-              className="bg-[#00b1eb] p-3 rounded-md flex gap-1.5 text-gray-700"
+              className="bg-[#00b1eb] hover:border transition duration-500 p-3 rounded-md flex gap-1.5 text-gray-700"
             >
               <span>Apply Now</span>
               <svg
@@ -156,6 +160,8 @@ export default function Home() {
       </div>
 
       <Services />
+
+      <Feedback />
 
       <Gallery />
 

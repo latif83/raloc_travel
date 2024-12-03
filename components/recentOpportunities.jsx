@@ -51,7 +51,7 @@ const RecentOpportunities = () => {
     ];
 
     return (
-        <div className="px-12 pb-8">
+        <div id='offers' className="px-12 pb-8">
             <h2 className="text-2xl font-bold mb-4 text-center">Recent Opportunities</h2>
 
             <div className="relative">
