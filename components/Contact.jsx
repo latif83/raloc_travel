@@ -12,7 +12,7 @@ export const Contact = () => {
       >
         <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3395.6804704429082!2d-1.7744911533118661!3d4.931097653613794!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNMKwNTUnNTEuOSJOIDHCsDQ2JzIwLjIiVw!5e0!3m2!1sen!2sgh!4v1708179533403!5m2!1sen!2sgh" width="100%" height="480" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
       </div>
-      <div id="getInTouch" className="container px-6 md:px-12 mt-20">
+      <div id="getInTouch" className="container px-3 md:px-12 mt-20">
 
         <div className="block rounded-lg bg-[hsla(0,0%,100%,0.8)] px-6 py-12 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]  md:py-16 md:px-12 -mt-[100px] backdrop-blur-[30px] border border-gray-300">
           <h1 className="text-xl font-bold py-5">GET IN TOUCH</h1>

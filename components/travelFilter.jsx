@@ -15,7 +15,7 @@ const TravelFilter = () => {
 
     return (
         <div className='relative'>
-            <div className='absolute left-0 w-full -top-16'>
+            <div className='absolute left-0 w-full -top-16 sm:p-0 px-3'>
                 <div className="p-6 mb-12 bg-white border-2 border-[#0d4785] shadow-md rounded-lg max-w-5xl mx-auto mt-6">
                     <h2 className="text-xl font-bold mb-4">Find Your Travel Opportunities</h2>
 

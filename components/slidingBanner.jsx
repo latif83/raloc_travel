@@ -53,9 +53,9 @@ const SlidingBanner = () => {
                         Your browser does not support the video tag.
                     </video>
 
-                    <div className="absolute bg-[#0d4785]/20 backdrop-blur-[1.5px] px-12 left-0 top-0 w-full h-full">
+                    <div className="absolute bg-[#0d4785]/20 backdrop-blur-[1.5px] sm:px-12 px-3 left-0 top-0 w-full h-full">
                         <div className="h-full flex flex-col justify-center items-center text-white">
-                            <h3 className="text-5xl font-bold font-cursive">
+                            <h3 className="sm:text-5xl text-3xl font-bold font-cursive">
                                 {slide.heading}
                             </h3>
                             <p className="text-lg mt-5">

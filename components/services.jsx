@@ -2,11 +2,11 @@ import Image from "next/image"
 
 export const Services = () => {
     return (
-        <div id="services" className="p-12">
+        <div id="services" className="py-12 md:px-12 px-3">
             <h2 className="text-2xl font-bold text-center">OUR SERVICES</h2>
             <hr className="h-1 w-8 bg-black mx-auto rounded-xl" />
 
-            <div className="grid grid-cols-4 gap-4 mt-8">
+            <div className="grid sm:grid-cols-4 gap-4 mt-8">
 
                 <div className="bg-indigo-100 rounded overflow-hidden">
                     <div>

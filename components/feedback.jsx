@@ -3,14 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 export const Feedback = () => {
     return (
-        <div id="testimonials" className="p-12 bg-[url('/dots.png')] bg-cover">
+        <div id="testimonials" className="sm:px-12 px-3 py-12 bg-[url('/dots.png')] bg-cover bg-center bg-fixed">
             <h1 className="text-center text-lg">
                 TESTIMONIALS
             </h1>
-            <p className="text-center text-5xl mt-2 font-bold">
+            <p className="text-center md:text-5xl text-2xl mt-2 font-bold">
                 We have worked with thousands of amazing people around the world.
             </p>
-            <div className="grid grid-cols-4 gap-4 mt-12">
+            <div className="grid sm:grid-cols-4 gap-4 mt-12">
                 <div className="col-span-1 flex flex-col gap-4">
                     <div className="shadow-lg border rounded-lg p-3 bg-white">
                         <div className="flex gap-3">
@@ -76,7 +76,7 @@ export const Feedback = () => {
                         </p>
                     </div>
                 </div>
-                <div className="col-span-2 flex flex-col">
+                <div className="sm:col-span-2 flex flex-col">
                 <div className="shadow-lg border rounded-lg p-3 bg-white">
                         <div className="flex gap-3">
                             <div className="text-gray-300">
@@ -99,7 +99,7 @@ export const Feedback = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4 mt-4">
+                    <div className="grid sm:grid-cols-2 gap-4 mt-4">
                     <div className="shadow-lg border rounded-lg p-3 bg-white">
                         <div className="flex gap-3">
                             <div className="text-gray-300">

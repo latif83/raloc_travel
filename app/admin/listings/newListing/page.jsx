@@ -95,8 +95,8 @@ export default function NewListing() {
 
             <form onSubmit={handleSubmit}>
 
-                <div className="grid grid-cols-3 gap-6">
-                    <div className="col-span-2 pt-1">
+                <div className="grid md:grid-cols-3 gap-6">
+                    <div className="md:col-span-2 pt-1">
 
                         <div className="mb-4">
                             <label htmlFor="serviceType" className="block mb-2 text-sm font-medium text-gray-900">Select Service</label>
@@ -148,7 +148,7 @@ export default function NewListing() {
                         </div>
                     </div>
 
-                    <div className="col-span-1">
+                    <div className="md:col-span-1">
                         <input id="serviceImage" hidden type="file" accept="image/*"
                             onChange={handleSelectImage} />
                         {formData.listingImagePreview ? <div className="w-full h-56 border-2 border-dotted flex flex-col items-center justify-center rounded-md text-gray-400 gap-2 cursor-pointer hover:border-red-500 transition duration-500 relative"> <Image src={formData.listingImagePreview} className="w-full h-full object-cover" width={1000} height={1000} alt="service image" /> <div className="absolute -bottom-3 w-full flex justify-center"> <button type="button" onClick={() => setFormData((prevData) => ({ ...prevData, listingImagePreview: '', listingImageFile: '' }))} className="p-2 rounded-md bg-red-600 hover:bg-red-400 text-white">

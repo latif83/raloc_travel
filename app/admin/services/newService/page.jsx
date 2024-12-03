@@ -89,8 +89,8 @@ export default function NewService() {
             </div>
 
             <form onSubmit={handleSubmit}>
-                <div className="grid grid-cols-3 gap-6">
-                    <div className="col-span-2 pt-1">
+                <div className="grid md:grid-cols-3 gap-6">
+                    <div className="md:col-span-2 pt-1">
                         <div className="mb-5">
                             <label htmlFor="service" className="block mb-2 text-sm font-medium text-gray-900">Service Name:</label>
                             <input type="text" id="service" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="e.g Study Abroad" value={formData.service} onChange={(e) => setFormData((prevData) => ({ ...prevData, service: e.target.value }))} required />
@@ -102,7 +102,7 @@ export default function NewService() {
                         </div>
                     </div>
 
-                    <div className="col-span-1">
+                    <div className="md:col-span-1">
                         <input id="serviceImage" hidden type="file" accept="image/*"
                             onChange={handleSelectImage} />
                         {formData.serviceImagePreview ? <div className="w-full h-56 border-2 border-dotted flex flex-col items-center justify-center rounded-md text-gray-400 gap-2 cursor-pointer hover:border-red-500 transition duration-500 relative"> <Image src={formData.serviceImagePreview} className="w-full h-full object-cover" width={1000} height={1000} alt="service image" /> <div className="absolute -bottom-3 w-full flex justify-center"> <button type="button" onClick={() => setFormData((prevData) => ({ ...prevData, serviceImagePreview: '', serviceImageFile: '' }))} className="p-2 rounded-md bg-red-600 hover:bg-red-400 text-white">

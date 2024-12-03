@@ -1,3 +1,5 @@
+"use client";
+import { Apply } from "@/components/apply";
 import { Contact } from "@/components/Contact";
 import { Feedback } from "@/components/feedback";
 import { Footer } from "@/components/footer";
@@ -6,14 +8,22 @@ import RecentOpportunities from "@/components/recentOpportunities";
 import { Services } from "@/components/services";
 import SlidingBanner from "@/components/slidingBanner";
 import TravelFilter from "@/components/travelFilter";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Home() {
+  const [apply, setApply] = useState();
+
+  const [openMNav, setOpenMNav] = useState(false);
+
   return (
     <div>
+      {apply && <Apply setApply={setApply} />}
       <header className="">
-        <div className="bg-[#0d4785] shadow text-white flex justify-between text-sm px-12">
+        <div className="bg-[#0d4785] shadow text-white md:flex hidden justify-between text-sm sm:px-12">
           <div className="flex gap-6 p-3 pl-0">
             <div className="flex gap-1 items-center">
               <svg
@@ -96,8 +106,8 @@ export default function Home() {
             </svg>
           </div>
         </div>
-        <div className="p-2 px-12 relative flex justify-between items-center">
-          <div className="relative z-50 bg-white">
+        <div className="p-2 sm:px-12 px-3 relative flex justify-between items-center">
+          <div className="relative z-40 bg-white">
             <Image
               src={"/logo.png"}
               width={500}
@@ -108,7 +118,7 @@ export default function Home() {
           </div>
           <div className="absolute top-12 bg-[#00b1eb] border-t border-b border-[#00b1eb] w-full left-0"></div>
 
-          <div className="flex gap-4 text-sm font-medium pt-2 relative z-50">
+          <div className="md:flex hidden gap-4 text-sm font-medium pt-2 relative z-40">
             <Link href={"/"} className="bg-white p-2">
               HOME
             </Link>
@@ -126,8 +136,57 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="pt-2 relative z-50">
+          <div className="md:hidden block relative z-40">
             <button
+              onClick={() => setOpenMNav(true)}
+              type="button"
+              className="bg-[#00b1eb] py-4 px-3 text-white rounded-lg text-gray-200"
+            >
+              <FontAwesomeIcon
+                icon={faBars}
+                width={30}
+                height={30}
+                className="text-xl"
+              />
+            </button>
+          </div>
+
+          {openMNav && (
+            <div className="bg-[#00b1eb] fixed top-0 left-0 h-svh w-full z-50 py-12 px-4 flex flex-col justify-between transition duration-500">
+              <div>
+                <div className="flex justify-end">
+                  <button onClick={() => setOpenMNav(false)} type="button" className="bg-red-600 p-2 rounded-lg">
+                    <FontAwesomeIcon icon={faXmark} width={20} height={20} />
+                  </button>
+                </div>
+
+                <nav className="flex flex-col gap-2 text-gray-100">
+                  <Link href={"/"} className="p-2">
+                    HOME
+                  </Link>
+                  <Link href={"#getInTouch"} className="p-2">
+                    CONTACT US
+                  </Link>
+                  <Link href={"#services"} className="p-2">
+                    OUR SERVICES
+                  </Link>
+                  <Link href={"#testimonials"} className="p-2">
+                    TESTIMONIALS
+                  </Link>
+                  <Link href={"#offers"} className="p-2">
+                    OFFERS
+                  </Link>
+                </nav>
+              </div>
+              <div>
+                <p className="text-center">&copy; RALOC TRAVELS, 2024</p>
+              </div>
+            </div>
+          )}
+
+          <div className="pt-2 md:block hidden relative z-40">
+            <button
+              onClick={() => setApply(true)}
               type="button"
               className="bg-[#00b1eb] hover:border transition duration-500 p-3 rounded-md flex gap-1.5 text-gray-700"
             >
@@ -168,7 +227,6 @@ export default function Home() {
       <Contact />
 
       <Footer />
-
     </div>
   );
 }
