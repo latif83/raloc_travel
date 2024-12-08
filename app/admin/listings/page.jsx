@@ -57,7 +57,7 @@ export default function Listings() {
             {viewOffer && <ListingDetails listingData={offerData} setViewOffer={setViewOffer} setFetchData={setFetchData} />}
 
             <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-semibold mb-5">Listings</h2>
+                <h2 className="text-2xl font-semibold">Listings</h2>
 
                 <Link href={'/admin/listings/newListing'} className="border border-black hover:text-white p-3 rounded-xl hover:bg-black transition duration-500 flex items-center justify-center gap-1.5">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 w-6">

@@ -4,12 +4,8 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState, use } from "react";
 import { db } from "@/Firebase/config";
 import {
-    addDoc,
-    collection,
-    deleteDoc,
     doc,
     getDoc,
-    getDocs,
     updateDoc,
 } from "firebase/firestore";
 import { imageDb } from "@/Firebase/config";
@@ -18,7 +14,6 @@ import { v4 } from "uuid";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { ImageConfigContext } from "next/dist/server/route-modules/pages/vendored/contexts/entrypoints";
 
 export default function EditService({ params }) {
 
@@ -144,8 +139,8 @@ export default function EditService({ params }) {
             </div>
 
             <form onSubmit={handleSubmit}>
-                <div className="grid grid-cols-3 gap-6">
-                    <div className="col-span-2 pt-1">
+                <div className="grid md:grid-cols-3 gap-6">
+                    <div className="md:col-span-2 pt-1">
                         <div className="mb-5">
                             <label htmlFor="service" className="block mb-2 text-sm font-medium text-gray-900">Service Name:</label>
                             <input type="text" id="service" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="e.g Study Abroad" value={formData.service} onChange={(e) => setFormData((prevData) => ({ ...prevData, service: e.target.value }))} required />

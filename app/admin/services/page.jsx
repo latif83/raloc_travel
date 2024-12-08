@@ -56,7 +56,7 @@ export default function Services() {
             {delService && <DelService serviceId={serviceId} setDelService={setDelService} setFetchData={setFetchData} />}
 
             <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-semibold mb-5">Services</h2>
+                <h2 className="text-2xl font-semibold">Services</h2>
 
                 <Link href={'/admin/services/newService'} className="border border-black hover:text-white p-3 rounded-xl hover:bg-black transition duration-500 flex items-center justify-center gap-1.5">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 w-6">
