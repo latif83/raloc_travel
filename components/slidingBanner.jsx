@@ -55,10 +55,10 @@ const SlidingBanner = () => {
 
                     <div className="absolute bg-[#0d4785]/20 backdrop-blur-[1.5px] sm:px-12 px-3 left-0 top-0 w-full h-full">
                         <div className="h-full flex flex-col justify-center items-center text-white">
-                            <h3 className="sm:text-5xl text-3xl font-bold font-cursive">
+                            <h3 className="sm:text-5xl text-3xl font-bold font-cursive text-center">
                                 {slide.heading}
                             </h3>
-                            <p className="text-lg mt-5">
+                            <p className="text-lg mt-5 text-center">
                                 {slide.subheading}
                             </p>
                             <button
