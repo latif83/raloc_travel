@@ -6,7 +6,7 @@ export const Footer = () => {
             <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
                 <div className="md:flex md:justify-between">
                     <div className="mb-6 md:mb-0 flex flex-col gap-2 items-center justify-center">
-                        <img src="/logo.png" className="h-24" alt="FlowBite Logo" />
+                        <img src="/logo.png" className="h-24" alt="Raloc Logo" />
                         <span className="text-white">
                             Travel Far, Live Fully
                         </span>
