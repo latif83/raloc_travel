@@ -1,7 +1,10 @@
 "use client"
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '@/Firebase/config';
 
 const RecentOpportunities = () => {
+
     const scrollContainerRef = useRef(null);
 
     const scrollLeft = () => {
@@ -50,6 +53,40 @@ const RecentOpportunities = () => {
         },
     ];
 
+    const [loading, setLoading] = useState(true)
+
+    const [offers, setOffers] = useState([])
+
+    useEffect(() => {
+
+        const getOffers = async () => {
+            try {
+
+                const getOffersDataRequest = await getDocs(
+                    collection(db, "raloc/travels/listings")
+                );
+
+                const offersData = getOffersDataRequest.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+
+                setOffers(offersData)
+
+                // console.log(offersData)
+
+            }
+            catch (e) {
+                console.log(e)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        getOffers()
+
+    }, [])
+
     return (
         <div id='offers' className="sm:px-12 px-3 md:mt-0 mt-32 pb-8">
             <h2 className="text-2xl font-bold mb-4 text-center">Recent Opportunities</h2>
@@ -60,31 +97,48 @@ const RecentOpportunities = () => {
                     className="flex overflow-x-scroll no-scrollbar space-x-4"
                     style={{ scrollBehavior: 'smooth' }}
                 >
-                    {opportunities.map((opportunity, index) => (
-                        <div
-                            key={index}
-                            className="min-w-[250px] flex-shrink-0 bg-gray-100 rounded-md shadow hover:shadow-lg transition"
-                        >
-                            <img
-                                src={opportunity.image}
-                                alt={opportunity.title}
-                                className="w-full h-40 object-cover rounded-t-md mb-3"
-                            />
-                            <div className='p-2 py-4'>
-                                <h3 className="font-semibold text-lg">{opportunity.title}</h3>
-                                <p className="text-sm text-gray-600">Deadline: {opportunity.deadline}</p>
-                                <button type='button' className='text-blue-600 text-sm hover:underline hover:text-red-600 transition duration-500 flex items-center gap-1.5 mt-2'>
-                                    <span>
-                                        View More and Apply
-                                    </span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
+                    {loading ? [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n, index) => (<div
+                        key={index}
+                        className="min-w-[250px] flex-shrink-0 bg-gray-50 rounded-md shadow hover:shadow-lg transition"
+                    >
 
-                                </button>
-                            </div>
+                        <div className="w-full h-40 bg-gray-200 object-cover rounded-t-md mb-1 animate-pulse">
+
                         </div>
-                    ))}
+                        <div className='p-2 py-4'>
+                            <h3 className="font-semibold text-lg bg-gray-200 rounded-md animate-pulse h-3"></h3>
+                            <p className="text-sm text-gray-600 h-3 bg-gray-200 rounded-md animate-pulse mt-1"></p>
+                            <button type='button' className='text-blue-600 text-sm hover:underline hover:text-red-600 transition duration-500 flex items-center gap-1.5 mt-2 bg-blue-200 animate-pulse h-4 w-full rounded-md'>
+
+
+                            </button>
+                        </div>
+                    </div>)) : offers.length < 1 ? <div className='flex-1 text-gray-500'> <p className='text-center font-bold'>
+                        No Offers found at the moment, please try again later!</p> </div> : offers.map((offer, index) => (
+                            <div
+                                key={index}
+                                className="min-w-[250px] flex-shrink-0 bg-gray-100 rounded-md shadow hover:shadow-lg transition"
+                            >
+                                <img
+                                    src={offer.listingImage}
+                                    alt={offer.title}
+                                    className="w-full h-40 object-cover rounded-t-md mb-3"
+                                />
+                                <div className='p-2 py-4'>
+                                    <h3 className="font-semibold text-lg">{offer.listing}</h3>
+                                    <p className="text-sm text-gray-600">Deadline: {new Date(offer.deadline).toDateString()}</p>
+                                    <button type='button' className='text-blue-600 text-sm hover:underline hover:text-red-600 transition duration-500 flex items-center gap-1.5 mt-2'>
+                                        <span>
+                                            View More and Apply
+                                        </span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                        </svg>
+
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
                 </div>
             </div>
 
