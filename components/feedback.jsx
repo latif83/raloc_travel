@@ -19,7 +19,7 @@ export const Feedback = () => {
                             </div>
                             <div>
                                 <p className="text-sm">
-                                    Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.
+                                RALOC Travels is the reason I now work in the UK. Their professionalism and support were excellent.
                                 </p>
 
 
@@ -27,10 +27,10 @@ export const Feedback = () => {
                         </div>
                         <hr className="my-5" />
                         <p className="font-italic font-semibold text-center">
-                            Leslie Alexander
+                        Samuel Owusu
                         </p>
                         <p className="text-sm text-center">
-                            Student at New Castle University
+                        Nurse in London, UK
                         </p>
                     </div>
                     <div className="shadow-lg border rounded-lg p-3 bg-white">
@@ -40,7 +40,7 @@ export const Feedback = () => {
                             </div>
                             <div>
                                 <p className="text-sm">
-                                    Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.
+                                My first international vacation was amazing, thanks to RALOC Travels’ great planning and support.
                                 </p>
 
 
@@ -48,10 +48,10 @@ export const Feedback = () => {
                         </div>
                         <hr className="my-5" />
                         <p className="font-italic font-semibold text-center">
-                            Leslie Alexander
+                        Jessica Adams
                         </p>
                         <p className="text-sm text-center">
-                            Student at New Castle University
+                        Tourist in Thailand
                         </p>
                     </div>
                     <div className="shadow-lg border rounded-lg p-3 bg-white">
@@ -61,7 +61,7 @@ export const Feedback = () => {
                             </div>
                             <div>
                                 <p className="text-sm">
-                                    Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.
+                                They helped me secure admission and a visa to study in the US. RALOC Travels is the best!
                                 </p>
 
 
@@ -69,10 +69,10 @@ export const Feedback = () => {
                         </div>
                         <hr className="my-5" />
                         <p className="font-italic font-semibold text-center">
-                            Leslie Alexander
+                            Emmanuel Kofi Brew
                         </p>
                         <p className="text-sm text-center">
-                            Student at New Castle University
+                        Student at Harvard University
                         </p>
                     </div>
                 </div>
@@ -84,7 +84,7 @@ export const Feedback = () => {
                             </div>
                             <div>
                                 <p className="text-sm">
-                                    Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.
+                                RALOC Travels made my dream of studying abroad a reality. Their guidance throughout the process was exceptional!
                                 </p>
 
 
@@ -92,10 +92,10 @@ export const Feedback = () => {
                         </div>
                         <hr className="my-5" />
                         <p className="font-italic font-semibold text-center">
-                            Leslie Alexander
+                        Sarah Johnson
                         </p>
                         <p className="text-sm text-center">
-                            Student at New Castle University
+                        Student at University of Toronto
                         </p>
                     </div>
 
@@ -107,7 +107,7 @@ export const Feedback = () => {
                             </div>
                             <div>
                                 <p className="text-sm">
-                                    Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.
+                                Thanks to RALOC Travels, I secured a job abroad in my dream country. Their support was incredible!
                                 </p>
 
 
@@ -115,10 +115,10 @@ export const Feedback = () => {
                         </div>
                         <hr className="my-5" />
                         <p className="font-italic font-semibold text-center">
-                            Leslie Alexander
+                            JNR Micheal Afful
                         </p>
                         <p className="text-sm text-center">
-                            Student at New Castle University
+                        Engineer at TechCorp, Germany
                         </p>
                     </div>
                     <div className="shadow-lg border rounded-lg p-3 bg-white">
@@ -128,7 +128,7 @@ export const Feedback = () => {
                             </div>
                             <div>
                                 <p className="text-sm">
-                                    Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.
+                                My vacation was seamless, thanks to RALOC Travels! From planning to execution, they were top-notch.
                                 </p>
 
 
@@ -136,10 +136,10 @@ export const Feedback = () => {
                         </div>
                         <hr className="my-5" />
                         <p className="font-italic font-semibold text-center">
-                            Leslie Alexander
+                        Emily Carter
                         </p>
                         <p className="text-sm text-center">
-                            Student at New Castle University
+                        Tourist in Bali, Indonesia
                         </p>
                     </div>
                     <div className="shadow-lg border rounded-lg p-3 bg-white">
@@ -149,7 +149,7 @@ export const Feedback = () => {
                             </div>
                             <div>
                                 <p className="text-sm">
-                                    Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.
+                                I never thought I could study in Europe, but RALOC Travels made it possible with their expertise.
                                 </p>
 
 
@@ -157,10 +157,10 @@ export const Feedback = () => {
                         </div>
                         <hr className="my-5" />
                         <p className="font-italic font-semibold text-center">
-                            Leslie Alexander
+                        Anita Mensah
                         </p>
                         <p className="text-sm text-center">
-                            Student at New Castle University
+                        Student at University of Amsterdam
                         </p>
                     </div>
                     <div className="shadow-lg border rounded-lg p-3 bg-white">
@@ -170,7 +170,7 @@ export const Feedback = () => {
                             </div>
                             <div>
                                 <p className="text-sm">
-                                    Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.
+                                RALOC Travels connected me with a fantastic opportunity to work in Dubai. I'm so grateful!
                                 </p>
 
 
@@ -178,10 +178,10 @@ export const Feedback = () => {
                         </div>
                         <hr className="my-5" />
                         <p className="font-italic font-semibold text-center">
-                            Leslie Alexander
+                        Ahmed Issah
                         </p>
                         <p className="text-sm text-center">
-                            Student at New Castle University
+                        Financial Analyst in Dubai, UAE
                         </p>
                     </div>
                     </div>
@@ -194,7 +194,7 @@ export const Feedback = () => {
                             </div>
                             <div>
                                 <p className="text-sm">
-                                    Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.
+                                RALOC Travels organized a wonderful group tour to Paris. It was the best travel experience of my life!
                                 </p>
 
 
@@ -202,10 +202,10 @@ export const Feedback = () => {
                         </div>
                         <hr className="my-5" />
                         <p className="font-italic font-semibold text-center">
-                            Leslie Alexander
+                            Bernard Okutu
                         </p>
                         <p className="text-sm text-center">
-                            Student at New Castle University
+                        Tourist in Paris, France
                         </p>
                     </div>
                     <div className="shadow-lg border rounded-lg p-3 bg-white">
@@ -215,7 +215,7 @@ export const Feedback = () => {
                             </div>
                             <div>
                                 <p className="text-sm">
-                                    Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.
+                                I got my work visa and placement abroad with ease, all thanks to RALOC Travels’ dedicated team.
                                 </p>
 
 
@@ -223,10 +223,10 @@ export const Feedback = () => {
                         </div>
                         <hr className="my-5" />
                         <p className="font-italic font-semibold text-center">
-                            Leslie Alexander
+                        Daniel Osei
                         </p>
                         <p className="text-sm text-center">
-                            Student at New Castle University
+                        IT Specialist in Canada
                         </p>
                     </div>
                     <div className="shadow-lg border rounded-lg p-3 bg-white">
@@ -236,7 +236,7 @@ export const Feedback = () => {
                             </div>
                             <div>
                                 <p className="text-sm">
-                                    Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.
+                                Planning my study abroad was so easy with RALOC Travels. Their team handled everything perfectly.
                                 </p>
 
 
@@ -244,10 +244,10 @@ export const Feedback = () => {
                         </div>
                         <hr className="my-5" />
                         <p className="font-italic font-semibold text-center">
-                            Leslie Alexander
+                            Abigail Eduah
                         </p>
                         <p className="text-sm text-center">
-                            Student at New Castle University
+                        Student at Australian National University
                         </p>
                     </div>
                 </div>
