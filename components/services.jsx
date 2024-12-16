@@ -1,6 +1,6 @@
 "use client"
 import { db } from "@/Firebase/config"
-import { collection, getDocs } from "firebase/firestore"
+import { collection, getDocs, query, where } from "firebase/firestore"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 
@@ -23,7 +23,22 @@ export const Services = () => {
                     ...doc.data(),
                 }));
 
-                setServices(servicesData)
+                // Fetch listing counts for each service
+                const servicesWithCounts = await Promise.all(
+                    servicesData.map(async (service) => {
+                        const listingsQuery = query(
+                            collection(db, "raloc/travels/listings"),
+                            where("serviceId", "==", service.id)
+                        );
+                        const listingsSnapshot = await getDocs(listingsQuery);
+                        return {
+                            ...service,
+                            listingCount: listingsSnapshot.size, // Count listings for this service
+                        };
+                    })
+                );
+
+                setServices(servicesWithCounts)
 
                 // console.log(servicesData)
 
@@ -69,7 +84,7 @@ export const Services = () => {
                                 {service.service}
                             </h3>
                             <p className="font-bold text-center">
-                                10 Offers
+                                {`${service.listingCount} ${service.listingCount > 1 ? 'Offers' : 'Offer'}`}
                             </p>
 
                             <button type="button" className="flex items-center justify-center gap-1.5 p-3 border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white rounded-xl mt-3 mx-auto transition duration-500">

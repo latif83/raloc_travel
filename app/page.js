@@ -15,13 +15,10 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
-  const [apply, setApply] = useState();
-
   const [openMNav, setOpenMNav] = useState(false);
 
   return (
     <div>
-      {apply && <Apply setApply={setApply} />}
       <header className="">
         <div className="bg-[#0d4785] shadow text-white md:flex hidden justify-between text-sm sm:px-12">
           <div className="flex gap-6 p-3 pl-0">
@@ -155,7 +152,11 @@ export default function Home() {
             <div className="bg-[#00b1eb] fixed top-0 left-0 h-svh w-full z-50 py-12 px-4 flex flex-col justify-between transition duration-500">
               <div>
                 <div className="flex justify-end">
-                  <button onClick={() => setOpenMNav(false)} type="button" className="bg-red-600 p-2 rounded-lg">
+                  <button
+                    onClick={() => setOpenMNav(false)}
+                    type="button"
+                    className="bg-red-600 p-2 rounded-lg"
+                  >
                     <FontAwesomeIcon icon={faXmark} width={20} height={20} />
                   </button>
                 </div>
@@ -185,9 +186,8 @@ export default function Home() {
           )}
 
           <div className="pt-2 md:block hidden relative z-40">
-            <button
-              onClick={() => setApply(true)}
-              type="button"
+            <Link
+              href="#offers"
               className="bg-[#00b1eb] hover:border transition duration-500 p-3 rounded-md flex gap-1.5 text-gray-700"
             >
               <span>Apply Now</span>
@@ -205,7 +205,7 @@ export default function Home() {
                   d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
               </svg>
-            </button>
+            </Link>
           </div>
         </div>
       </header>

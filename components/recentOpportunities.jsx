@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '@/Firebase/config';
+import { ViewOffer } from './viewOffer';
 
 const RecentOpportunities = () => {
 
@@ -87,8 +88,14 @@ const RecentOpportunities = () => {
 
     }, [])
 
+    const [viewOffer,setViewOffer] = useState(false)
+    const [listingData,setListingData] = useState()
+
     return (
         <div id='offers' className="sm:px-12 px-3 md:mt-0 mt-32 pb-8">
+
+            {viewOffer && <ViewOffer listingData={listingData} setViewOffer={setViewOffer} />}
+
             <h2 className="text-2xl font-bold mb-4 text-center">Recent Opportunities</h2>
 
             <div className="relative">
@@ -127,7 +134,10 @@ const RecentOpportunities = () => {
                                 <div className='p-2 py-4'>
                                     <h3 className="font-semibold text-lg">{offer.listing}</h3>
                                     <p className="text-sm text-gray-600">Deadline: {new Date(offer.deadline).toDateString()}</p>
-                                    <button type='button' className='text-blue-600 text-sm hover:underline hover:text-red-600 transition duration-500 flex items-center gap-1.5 mt-2'>
+                                    <button onClick={()=>{
+                                        setListingData(offer)
+                                        setViewOffer(true)
+                                    }} type='button' className='text-blue-600 text-sm hover:underline hover:text-red-600 transition duration-500 flex items-center gap-1.5 mt-2'>
                                         <span>
                                             View More and Apply
                                         </span>

@@ -57,14 +57,14 @@ export default function Listings() {
             {viewOffer && <ListingDetails listingData={offerData} setViewOffer={setViewOffer} setFetchData={setFetchData} />}
 
             <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-semibold">Listings</h2>
+                <h2 className="text-2xl font-semibold">Offers</h2>
 
                 <Link href={'/admin/listings/newListing'} className="border border-black hover:text-white p-3 rounded-xl hover:bg-black transition duration-500 flex items-center justify-center gap-1.5">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 w-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                     <span>
-                        New Listing
+                        New Offer
                     </span>
                 </Link>
             </div>

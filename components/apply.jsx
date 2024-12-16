@@ -1,10 +1,10 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-export const Apply = ({ setApply }) => {
+export const Apply = ({ listingData, setApply }) => {
     return (
-        <div className="backdrop-blur-sm fixed top-0 left-0 w-full h-svh z-50 flex items-center justify-center pt-16">
-            <form className="max-w-3xl transition duration-1000 h-full w-full border border-blue-500 shadow relative z-50 bg-white p-6 rounded-t-lg overflow-auto">
+        <div className="backdrop-blur-sm fixed top-0 left-0 w-full h-svh z-50 flex items-center justify-center sm:pt-16">
+            <form className="max-w-3xl transition duration-1000 h-full w-full sm:border border-blue-500 shadow relative z-50 bg-white sm:p-6 p-3 sm:rounded-t-lg overflow-auto">
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl">
                         Apply
@@ -16,31 +16,17 @@ export const Apply = ({ setApply }) => {
                 </div>
 
                 <div className="mt-5">
-                    <div className="text-sm" >
-                        <label htmlFor="offer" className="mb-1 block">
-                            Select Service:
-                        </label>
-                        <select id="offer" className="w-full p-2 py-3 block border rounded-lg outline-none">
-                            <option className="text-gray-500">
-                                Please select the service you're applying for.
-                            </option>
-                            <option>
-                                Education Scholarship
-                            </option>
-                        </select>
-                    </div>
-                    <div className="text-sm mt-5" >
-                        <label htmlFor="offer" className="mb-1 block">
-                            Select Offer:
-                        </label>
-                        <select id="offer" className="w-full p-2 py-3 block border rounded-lg outline-none">
-                            <option className="text-gray-500">
-                                Please select the offer you're applying for.
-                            </option>
-                            <option>
-                                Scholarship Opportunity
-                            </option>
-                        </select>
+
+                    <div className="p-2 bg-black text-white rounded">
+                        <h3 className="font-bold">
+                            {listingData.listing}
+                        </h3>
+                        <p className="text-xs text-gray-200">
+                            Please provide your personal details to apply for this offer!
+                        </p>
+                        <p className="text-xs text-gray-200">
+                            We'll get back to you using the details provided below!
+                        </p>
                     </div>
 
                     <div className="text-sm mt-5" >

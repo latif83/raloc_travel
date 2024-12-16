@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import { useRouter } from "next/navigation"
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { db } from "@/Firebase/config";
 import {
     addDoc,
@@ -22,9 +22,41 @@ export default function NewListing() {
 
     const router = useRouter()
 
+    const [servicesLoading, setServicesLoading] = useState(true)
+    const [services, setServices] = useState([])
+
+    useEffect(() => {
+
+        const getServices = async () => {
+            try {
+
+                const getServicesDataRequest = await getDocs(
+                    collection(db, "raloc/travels/service")
+                );
+
+                const servicesData = getServicesDataRequest.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+
+                setServices(servicesData)
+
+            }
+            catch (e) {
+                console.log(e)
+            } finally {
+                setServicesLoading(false)
+            }
+        }
+
+        getServices()
+
+    }, [])
+
     const [formData, setFormData] = useState({
         listing: '',
         service: '',
+        serviceId: '',
         description: '',
         deadline: '',
         requirements: [],
@@ -44,7 +76,7 @@ export default function NewListing() {
             const getImageUrl = await getDownloadURL(uploadImage.ref);
 
             const data = {
-                listing: formData.listing, service: formData.service, description: formData.description, requirements: formData.requirements, deadline: new Date(formData.deadline).toISOString(), listingImage: getImageUrl, createdAt: new Date().toISOString()
+                listing: formData.listing, service: formData.service, serviceId: formData.serviceId, description: formData.description, requirements: formData.requirements, deadline: new Date(formData.deadline).toISOString(), listingImage: getImageUrl, createdAt: new Date().toISOString()
             }
 
             const addListing = await addDoc(collection(db, `raloc/travels/listings`), data);
@@ -90,7 +122,7 @@ export default function NewListing() {
                         Back
                     </span>
                 </button>
-                <h2 className="text-2xl font-semibold mb-5">New Listing</h2>
+                <h2 className="text-2xl font-semibold mb-5">New Offer</h2>
             </div>
 
             <form onSubmit={handleSubmit}>
@@ -100,11 +132,35 @@ export default function NewListing() {
 
                         <div className="mb-4">
                             <label htmlFor="serviceType" className="block mb-2 text-sm font-medium text-gray-900">Select Service</label>
-                            <select id="serviceType" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required value={formData.service} onChange={(e) => setFormData(prevData => ({ ...prevData, service: e.target.value }))}>
-                                <option value={''}>Select Service</option>
-                                <option>Work Abroad</option>
-                                <option>Study</option>
+                            <select
+                                id="serviceType"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                required
+                                value={`${formData.service}|${formData.serviceId}`} // Bind composite value
+                                onChange={(e) => {
+                                    const [service, serviceId] = e.target.value.split("|"); // Split the selected value
+                                    setFormData((prevData) => ({
+                                        ...prevData,
+                                        service,
+                                        serviceId,
+                                    }));
+                                }}
+                            >
+                                <option value="|">Select Service</option>
+                                {servicesLoading ? (
+                                    <option value="|">Loading Services! Please wait...</option>
+                                ) : services.length < 1 ? (
+                                    <option value="|">No services found, please add a service!</option>
+                                ) : (
+                                    services.map((service, index) => (
+                                        <option value={`${service.service}|${service.id}`} key={index}>
+                                            {service.service}
+                                        </option>
+                                    ))
+                                )}
                             </select>
+
+
                         </div>
 
                         <div className="mb-4">
