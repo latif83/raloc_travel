@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '@/Firebase/config';
 import { ViewOffer } from './viewOffer';
+import Link from 'next/link';
 
 const RecentOpportunities = () => {
 
@@ -134,10 +135,7 @@ const RecentOpportunities = () => {
                                 <div className='p-2 py-4'>
                                     <h3 className="font-semibold text-lg">{offer.listing}</h3>
                                     <p className="text-sm text-gray-600">Deadline: {new Date(offer.deadline).toDateString()}</p>
-                                    <button onClick={()=>{
-                                        setListingData(offer)
-                                        setViewOffer(true)
-                                    }} type='button' className='text-blue-600 text-sm hover:underline hover:text-red-600 transition duration-500 flex items-center gap-1.5 mt-2'>
+                                    <Link href={`/offers/${offer.id}`} className='text-blue-600 text-sm hover:underline hover:text-red-600 transition duration-500 flex items-center gap-1.5 mt-2'>
                                         <span>
                                             View More and Apply
                                         </span>
@@ -145,7 +143,7 @@ const RecentOpportunities = () => {
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                         </svg>
 
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         ))}

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "@/Firebase/config";
-import { sendEmail } from "@/actions/actions";
+import { sendEmail, sendSMS } from "@/actions/actions";
 
 export const Apply = ({ listingData, setApply }) => {
     const [formData, setFormData] = useState({
@@ -22,6 +22,7 @@ export const Apply = ({ listingData, setApply }) => {
         e.preventDefault();
 
         try {
+            // console.log(listingData)
             // Save to Firestore
             const addApplication = await addDoc(collection(db, `raloc/travels/countries`), { ...formData, listing: listingData.listing, listingId: listingData.id });
 
@@ -29,6 +30,8 @@ export const Apply = ({ listingData, setApply }) => {
                 toast.success("Application submitted successfully!");
                 // Send email to the applicant
                 await sendEmail({ ...formData, listing: listingData.listing });
+
+                await sendSMS({ ...formData, listing: listingData.listing, offerLink : `https://raloctravels.com/offers/${listingData.id}` });
                 // toast.success("Confirmation email sent!");
                 setApply(false)
             } else {
