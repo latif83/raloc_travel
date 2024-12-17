@@ -47,6 +47,15 @@ export const AdminSidebar = () => {
 
                         <span>Offers</span>
                     </Link>
+                    <Link onClick={() => { mobileScreen && setOpenSidebar(false) }} className={`w-full ${pathname.includes("/admin/dashboard/countries") ? "bg-[#f2f2f2] text-gray-800" : "text-gray-50"} rounded-l sm:p-2 p-2 py-4 flex gap-1.5 items-center hover:font-bold`} href={'/admin/dashboard/countries'}>
+                        {/* <FontAwesomeIcon icon={faChartLine} width={20} height={20} className="text-lg" /> */}
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v1.5M3 21v-6m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5M3 15V4.5" />
+                        </svg>
+
+
+                        <span>Countries</span>
+                    </Link>
                 </div>
 
                 <div className="px-5 absolute bottom-2 w-full left-0">
