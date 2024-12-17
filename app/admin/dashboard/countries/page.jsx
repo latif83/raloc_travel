@@ -81,8 +81,8 @@ export default function Countries() {
                             <td colSpan={2} className="px-6 py-4 text-center">
                                 Loading data...
                             </td>
-                        </tr> : countries.map((country)=>(
-                            <tr className="bg-white border-b">
+                        </tr> : countries.map((country,index)=>(
+                            <tr key={index} className="bg-white border-b">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                 {country.country}
                             </th>
