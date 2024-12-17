@@ -90,8 +90,10 @@ export const Contact = () => {
                     </div>
                     <div className="ml-6 grow">
                       <p className="mb-2 font-bold ">Mobile</p>
-                      <p className="text-neutral-500">+233 248 347 434</p>
+                      <p className="text-neutral-500">+233 244 380 647</p>
+                      <p className="text-neutral-500">+233 550 900 509</p>
                       <p className="text-neutral-500">+233 507 635 008</p>
+                      <p className="text-neutral-500">+233 503 905 535</p>
                     </div>
                   </div>
                 </div>
