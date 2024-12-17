@@ -269,7 +269,7 @@ export default function ViewOffer({ params }) {
             </header>
 
             <div className="flex justify-between sm:flex-row flex-col gap-2 sm:items-center sm:px-12 px-3 pt-4">
-                <div>
+                <div className="flex gap-4 items-center">
                     <button onClick={() => router.back()} type="button" className="bg-gray-200 hover:bg-red-700 hover:text-white transition duration-500 flex items-center gap-2 rounded-md p-2 text-xs">
                         <FontAwesomeIcon icon={faArrowLeftLong} width={20} height={20} />
                         <span>
