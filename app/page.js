@@ -128,7 +128,7 @@ export default function Home() {
             <Link href={"#testimonials"} className="bg-white p-2">
               TESTIMONIALS
             </Link>
-            <Link href={"#offers"} className="bg-white p-2">
+            <Link href={"/offers"} className="bg-white p-2">
               OFFERS
             </Link>
           </div>
@@ -174,7 +174,7 @@ export default function Home() {
                   <Link href={"#testimonials"} className="p-2">
                     TESTIMONIALS
                   </Link>
-                  <Link href={"#offers"} className="p-2">
+                  <Link href={"/offers"} className="p-2">
                     OFFERS
                   </Link>
                 </nav>
@@ -187,7 +187,7 @@ export default function Home() {
 
           <div className="pt-2 md:block hidden relative z-40">
             <Link
-              href="#offers"
+              href="/offers"
               className="bg-[#00b1eb] hover:border transition duration-500 p-3 rounded-md flex gap-1.5 text-gray-700"
             >
               <span>Apply Now</span>
