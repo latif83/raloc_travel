@@ -10,7 +10,7 @@ export const Contact = () => {
         id="map"
         className="relative h-[300px] overflow-hidden bg-cover bg-[50%] bg-no-repeat"
       >
-        <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3395.6804704429082!2d-1.7744911533118661!3d4.931097653613794!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNMKwNTUnNTEuOSJOIDHCsDQ2JzIwLjIiVw!5e0!3m2!1sen!2sgh!4v1708179533403!5m2!1sen!2sgh" width="100%" height="480" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3272.461585701859!2d-0.26777552501408375!3d5.658061494323333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNcKwMzknMjkuMCJOIDDCsDE1JzU0LjciVw!5e1!3m2!1sen!2sgh!4v1734445577007!5m2!1sen!2sgh" width="100%" height="480" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
       </div>
       <div id="getInTouch" className="container px-3 md:px-12 mt-20">
 
@@ -136,7 +136,7 @@ export const Contact = () => {
                     <div className="ml-6 grow">
                       <p className="mb-2 font-bold ">Address</p>
                       <p className="text-sm text-neutral-500">
-                        Block A, SSNIT Flats, 10 Anaji Rd Takoradi
+                        Ofankor Barrier, Near the police station, Accra
                       </p>
                     </div>
                   </div>
