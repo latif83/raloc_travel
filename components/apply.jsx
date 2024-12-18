@@ -2,11 +2,13 @@
 import { useState } from "react";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
-import { db } from "@/Firebase/config";
+import { db, imageDb } from "@/Firebase/config";
 import { sendEmail, sendSMS } from "@/actions/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileUpload } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
 
 export const Apply = ({ listingData, setApply }) => {
     const [formData, setFormData] = useState({
@@ -24,13 +26,17 @@ export const Apply = ({ listingData, setApply }) => {
         setFormData((prev) => ({ ...prev, [id]: value }));
     };
 
+    const [passportImagePreview, setPassportImagePreview] = useState("")
+    const [passportImageFile, setPassportImageFile] = useState("")
+
     const handleSelectImage = (e) => {
         const selectedImage = e.target.files[0];
 
         if (selectedImage) {
             // Create a preview URL htmlFor the selected image
             const previewURL = URL.createObjectURL(selectedImage);
-            setFormData((prevData) => ({ ...prevData, passportImagePreview: previewURL, passportImageFile: selectedImage }));
+            setPassportImagePreview(previewURL)
+            setPassportImageFile(selectedImage)
         }
     };
 
@@ -39,8 +45,13 @@ export const Apply = ({ listingData, setApply }) => {
 
         try {
             // console.log(listingData)
+
+            const imgRef = ref(imageDb, `raloc/travels/passportpics/${v4()}`);
+            const uploadImage = await uploadBytes(imgRef, passportImageFile);
+            const getImageUrl = await getDownloadURL(uploadImage.ref);
+
             // Save to Firestore
-            const addApplication = await addDoc(collection(db, `raloc/travels/countries`), { ...formData, listing: listingData.listing, listingId: listingData.id });
+            const addApplication = await addDoc(collection(db, `raloc/travels/applications`), { ...formData, listing: listingData.listing, listingId: listingData.id, passportImage: getImageUrl });
 
             if (addApplication?.id) {
                 toast.success("Application submitted successfully!");
@@ -89,7 +100,7 @@ export const Apply = ({ listingData, setApply }) => {
                     </div>
 
                     <div className="mt-5 flex justify-end">
-                        {formData.passportImagePreview ? <Image src={formData.passportImagePreview} width={500} height={500} className="w-32 h-32 rounded-md object-cover" /> : <label htmlFor="passportImg" className="w-32 text-xs h-32 flex items-center flex-col justify-center gap-4 border rounded-md text-center">
+                        {passportImagePreview ? <Image src={passportImagePreview} width={500} height={500} className="w-32 h-32 rounded-md object-cover" alt="Passport Image" /> : <label htmlFor="passportImg" className="w-32 text-xs h-32 flex items-center flex-col justify-center gap-4 border rounded-md text-center">
                             <FontAwesomeIcon icon={faFileUpload} width={20} height={20} />
                             Upload Passport Picture
                         </label>}

@@ -7,7 +7,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { toast } from "react-toastify"
 
-export const NewCountry = ({ setAddCountry }) => {
+export const NewCountry = ({ setAddCountry, setFetchData }) => {
 
     const [country, setCountry] = useState("")
     const [loading, setLoading] = useState(false)
@@ -26,6 +26,7 @@ export const NewCountry = ({ setAddCountry }) => {
 
             if (addCountry?.id) {
                 toast.success('New country added successfully!')
+                setFetchData(true)
                 setAddCountry(false)
             } else {
                 toast.error('Unexpected error while adding offer, please try again later!')

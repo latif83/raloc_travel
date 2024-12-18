@@ -51,7 +51,7 @@ export default function Countries() {
 
 
         <div className="px-3 pt-8">
-            {addCounty && <NewCountry setAddCountry={setAddCountry} />}
+            {addCounty && <NewCountry setAddCountry={setAddCountry} setFetchData={setFetchData} />}
             <div className="flex justify-between items-center mb-8">
                 <h1>
                     Countries
@@ -81,7 +81,11 @@ export default function Countries() {
                             <td colSpan={2} className="px-6 py-4 text-center">
                                 Loading data...
                             </td>
-                        </tr> : countries.map((country,index)=>(
+                        </tr> : countries.length < 1 ? <tr className="bg-white border-b">
+                            <td colSpan={2} className="px-6 py-4 text-center">
+                                No countries found
+                            </td>
+                        </tr>  : countries.map((country,index)=>(
                             <tr key={index} className="bg-white border-b">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                 {country.country}
