@@ -309,7 +309,7 @@ export default function Offers() {
                                 Deadline: {new Date(offer.deadline).toDateString()}
                             </p>
 
-                            <Link href={`/offers/${offer.id}`} className="text-blue-600 font-semibold text-sm flex items-center">
+                            <Link href={`/offers/${offer.id}`} className="text-blue-600 font-semibold text-sm flex items-center hover:underline">
                                 <span>
                                 View more and apply
                                 </span>
