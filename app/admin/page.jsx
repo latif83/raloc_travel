@@ -1,43 +1,66 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toast } from "react-toastify";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const SignIn = () => {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loading, setLoading] = useState(false)
+
+  const [sLogin, setSLogin] = useState(false)
+
   const handleLogin = (e) => {
     e.preventDefault();
-
-    const loginCredentials = {
-      username: "raloc_travels_admin",
-      password: "raloc_travels_admin@123",
-    };
-
-    if (username === loginCredentials.username && password === loginCredentials.password) {
-      const expiryTime = new Date().getTime() + 30 * 60 * 1000; // 30 minutes
-      localStorage.setItem(
-        "auth",
-        JSON.stringify({ username, expiryTime })
-      );
-      toast.success("Login successful!", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-      setTimeout(() => {
-        router.push("/admin/dashboard"); // Redirect after showing the success message
-      }, 2000);
-    } else {
-      toast.error("Invalid username or password.", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-    }
+    setSLogin(true)
   };
+
+  useEffect(() => {
+
+    const submitLogin = () => {
+      setLoading(true)
+
+      try {
+        const loginCredentials = {
+          username: "raloc_travels_admin",
+          password: "raloc_travels_admin@123",
+        };
+
+        if (username === loginCredentials.username && password === loginCredentials.password) {
+          const expiryTime = new Date().getTime() + 30 * 60 * 1000; // 30 minutes
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({ username, expiryTime })
+          );
+          toast.success("Login successful!");
+          setTimeout(() => {
+
+            router.push("/admin/dashboard"); // Redirect after showing the success message
+          }, 2000);
+        } else {
+          toast.error("Invalid username or password.");
+          setLoading(false)
+        }
+      } catch (e) {
+        console.log(e)
+        setLoading(false)
+      } finally {
+        // setLoading(false)
+      }
+    }
+
+    if (sLogin) {
+      submitLogin()
+      setSLogin(false)
+    }
+
+  }, [sLogin])
 
   return (
     <section className="bg-[#0d4785]">
@@ -93,15 +116,16 @@ const SignIn = () => {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                disabled={loading}
+                className={`w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center gap-2 ${loading && 'bg-blue-300'}`}
               >
-                Sign in
+                {loading ? <><FontAwesomeIcon icon={faSpinner} spin width={20} height={20} /> <span>Signing in...</span></> : <span>
+                  Sign in</span>}
               </button>
             </form>
           </div>
         </div>
       </div>
-      <ToastContainer />
     </section>
   );
 };
