@@ -25,6 +25,9 @@ export default function NewListing() {
     const [servicesLoading, setServicesLoading] = useState(true)
     const [services, setServices] = useState([])
 
+    const [countriesLoading, setCountriesLoading] = useState(true)
+    const [countries, setCountries] = useState([])
+
     useEffect(() => {
 
         const getServices = async () => {
@@ -49,7 +52,31 @@ export default function NewListing() {
             }
         }
 
+        const getCountries = async () => {
+            try {
+
+                const getCountriesDataRequest = await getDocs(
+                    collection(db, "raloc/travels/countries")
+                );
+
+                const countriesData = getCountriesDataRequest.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+
+                setCountries(countriesData)
+
+            }
+            catch (e) {
+                console.log(e)
+            } finally {
+                setCountriesLoading(false)
+            }
+        }
+
         getServices()
+
+        getCountries()
 
     }, [])
 
@@ -57,6 +84,8 @@ export default function NewListing() {
         listing: '',
         service: '',
         serviceId: '',
+        country : '',
+        countryId : '',
         description: '',
         deadline: '',
         requirements: [],
@@ -76,7 +105,7 @@ export default function NewListing() {
             const getImageUrl = await getDownloadURL(uploadImage.ref);
 
             const data = {
-                listing: formData.listing, service: formData.service, serviceId: formData.serviceId, description: formData.description, requirements: formData.requirements, deadline: new Date(formData.deadline).toISOString(), listingImage: getImageUrl, createdAt: new Date().toISOString()
+                listing: formData.listing, service: formData.service, serviceId: formData.serviceId, description: formData.description, requirements: formData.requirements, deadline: new Date(formData.deadline).toISOString(), listingImage: getImageUrl, country: formData.country, countryId : formData.countryId, createdAt: new Date().toISOString()
             }
 
             const addListing = await addDoc(collection(db, `raloc/travels/listings`), data);
@@ -146,15 +175,49 @@ export default function NewListing() {
                                     }));
                                 }}
                             >
-                                <option value="|">Select Service</option>
+                                <option value="">Select Service</option>
                                 {servicesLoading ? (
-                                    <option value="|">Loading Services! Please wait...</option>
+                                    <option value="">Loading Services! Please wait...</option>
                                 ) : services.length < 1 ? (
-                                    <option value="|">No services found, please add a service!</option>
+                                    <option value="">No services found, please add a service!</option>
                                 ) : (
                                     services.map((service, index) => (
                                         <option value={`${service.service}|${service.id}`} key={index}>
                                             {service.service}
+                                        </option>
+                                    ))
+                                )}
+                            </select>
+
+
+                        </div>
+
+
+                        <div className="mb-4">
+                            <label htmlFor="serviceType" className="block mb-2 text-sm font-medium text-gray-900">Select Country</label>
+                            <select
+                                id="serviceType"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                required
+                                value={`${formData.country}|${formData.countryId}`} // Bind composite value
+                                onChange={(e) => {
+                                    const [country, countryId] = e.target.value.split("|"); // Split the selected value
+                                    setFormData((prevData) => ({
+                                        ...prevData,
+                                        country,
+                                        countryId,
+                                    }));
+                                }}
+                            >
+                                <option value="">Select Country</option>
+                                {countriesLoading ? (
+                                    <option value="">Loading Countries! Please wait...</option>
+                                ) : countries.length < 1 ? (
+                                    <option value="">No Countries found, please add a country!</option>
+                                ) : (
+                                    countries.map((country, index) => (
+                                        <option value={`${country.country}|${country.id}`} key={index}>
+                                            {country.country}
                                         </option>
                                     ))
                                 )}

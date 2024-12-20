@@ -120,7 +120,7 @@ export default function Listings() {
                         No offers Found
                     </span>
 
-                    <Link href="/admin/listings/newListing" className="bg-black text-white hover:bg-gray-700 p-2 rounded-md">
+                    <Link href="/admin/dashboard/listings/newListing" className="bg-black text-white hover:bg-gray-700 p-2 rounded-md">
                         New Offer
                     </Link>
                 </div>}
