@@ -61,7 +61,7 @@ export const Auth = ({ children }) => {
     children
   ) : (
     <div className="flex h-svh bg-black items-center justify-center text-white">
-      <p>Redirecting to login...</p>
+      <p>Checking Login Access...</p>
     </div>
   );
 };
