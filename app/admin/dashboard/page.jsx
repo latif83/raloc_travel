@@ -10,6 +10,7 @@ export default function AdminDashboard() {
 
     const [serviceCounts, setServiceCounts] = useState(0)
     const [listingCounts, setListingCounts] = useState(0)
+    const [applicationCounts,setApplicationCounts] = useState(0)
 
     // Reusable function to fetch counts
     const fetchCount = async (collectionPath) => {
@@ -33,6 +34,9 @@ export default function AdminDashboard() {
 
                 const listingCount = await fetchCount("raloc/travels/listings");
                 setListingCounts(listingCount);
+
+                const applicationCount = await fetchCount("raloc/travels/applications");
+                setApplicationCounts(applicationCount);
             } catch (e) {
                 console.log(e)
                 toast.error("Internal server error!")
@@ -60,7 +64,7 @@ export default function AdminDashboard() {
 
                     </div>
                     {/* {loading ? <span className="w-32 h-6 animate-pulse bg-gray-300 block mt-3 rounded-md"></span> : <p className="text-2xl font-bold text-gray-800">{summaryData?.totalUsers}</p>} */}
-                    <p className="text-2xl font-bold text-gray-800">6</p>
+                    {loading ? <span className="w-32 h-6 animate-pulse bg-gray-300 block mt-3 rounded-md"></span> : <p className="text-2xl font-bold text-gray-800">{applicationCounts}</p>}
                 </div>
 
                 {/* Active Subscribers */}
