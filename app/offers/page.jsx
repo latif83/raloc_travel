@@ -150,16 +150,16 @@ export default function Offers() {
                         <Link href={"/"} className="bg-white p-2">
                             HOME
                         </Link>
-                        <Link href={"#getInTouch"} className="bg-white p-2">
+                        <Link href={"/#getInTouch"} className="bg-white p-2">
                             CONTACT US
                         </Link>
-                        <Link href={"#services"} className="bg-white p-2">
+                        <Link href={"/#services"} className="bg-white p-2">
                             OUR SERVICES
                         </Link>
-                        <Link href={"#testimonials"} className="bg-white p-2">
+                        <Link href={"/#testimonials"} className="bg-white p-2">
                             TESTIMONIALS
                         </Link>
-                        <Link href={"#offers"} className="bg-white p-2">
+                        <Link href={"/offers"} className="bg-white p-2">
                             OFFERS
                         </Link>
                     </div>
@@ -205,7 +205,7 @@ export default function Offers() {
                                     <Link href={"/#testimonials"} className="p-2">
                                         TESTIMONIALS
                                     </Link>
-                                    <Link href={"/#offers"} className="p-2">
+                                    <Link href={"/offers"} className="p-2">
                                         OFFERS
                                     </Link>
                                 </nav>

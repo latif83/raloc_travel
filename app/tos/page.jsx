@@ -1,103 +1,17 @@
 "use client"
-import { Apply } from "@/components/apply";
 import { Footer } from "@/components/footer";
-import { db } from "@/Firebase/config";
-import { faArrowLeftLong, faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { doc, getDoc } from "firebase/firestore";
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import React, { useState } from "react";
 
-export default function ViewOffer({ params }) {
+export default function TermsOfService() {
 
     const [openMNav, setOpenMNav] = useState(false);
 
-    const { offerId } = params
-
-    const [loading, setLoading] = useState(true)
-
-    const [offerData, setOfferData] = useState()
-
-    useEffect(() => {
-        const getOffer = async () => {
-            try {
-                const docRef = doc(db, 'raloc/travels/listings', offerId);
-
-                // Fetch the document
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    // Document data
-                    setOfferData({
-                        id: docSnap.id, // Add the document ID
-                        ...docSnap.data(), // Spread the document data
-                    });
-                } else {
-                    // Document does not exist
-                    toast.error("Error fetching document, please try again later!")
-                    return
-                }
-            }
-            catch (e) {
-                console.log(e)
-                toast.error("Internal server error!")
-            }
-        }
-
-        getOffer()
-    }, [])
-
-
-    const sharePage = async () => {
-        const shareData = {
-            title: offerData?.listing || 'Raloc Travels',
-            text: offerData?.description || 'Check out this amazing offer!',
-            url: window.location.href, // Get the current page URL
-        };
-
-        if (navigator.share) {
-            try {
-                await navigator.share(shareData);
-                // toast.success("Page shared successfully!");
-            } catch (error) {
-                console.error("Error sharing page:", error);
-                toast.error("Failed to share page!");
-            }
-        } else {
-            // Fallback: Copy the URL to clipboard
-            navigator.clipboard.writeText(shareData.url)
-                .then(() => toast.success("Link copied to clipboard!"))
-                .catch((err) => {
-                    console.error("Failed to copy link:", err);
-                    toast.error("Failed to copy link!");
-                });
-        }
-    };
-
-    const [apply, setApply] = useState(false)
-
-    const router = useRouter()
-
-
     return (
         <>
-            {offerData && (
-                <Head>
-                    <title>{offerData.listing}</title>
-                    <meta name="description" content={offerData.description} />
-                    <meta property="og:title" content={offerData.listing} />
-                    <meta property="og:description" content={offerData.description} />
-                    <meta property="og:image" content={offerData.listingImage || '/default-image.png'} />
-                    <meta property="og:type" content="website" />
-                    <link rel="icon" href={offerData.listingImage || '/default-favicon.ico'} type="image/x-icon" />
-                </Head>
-            )}
-
-            {apply && <Apply listingData={offerData} setApply={setApply} />}
             <header className="">
                 <div className="bg-[#0d4785] shadow text-white md:flex hidden justify-between text-sm sm:px-12">
                     <div className="flex gap-6 p-3 pl-0">
@@ -155,7 +69,7 @@ export default function ViewOffer({ params }) {
                         >
                             <path
                                 fill="#ffffff"
-                                d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 504.5V334.2H141.4V256h52.8V222.3c0-87.1 39.4-127.5 125-127.5c16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1c-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287V510.1C413.8 494.8 512 386.9 512 256h0z"
+                                d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 1004.5V334.2H141.4V256h52.8V222.3c0-87.1 39.4-127.5 125-127.5c16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1c-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287V510.1C413.8 494.8 512 386.9 512 256h0z"
                             />
                         </svg>
                         <span className="border h-full"></span>
@@ -186,8 +100,8 @@ export default function ViewOffer({ params }) {
                     <div className="relative z-40 bg-white">
                         <Image
                             src={"/logo.png"}
-                            width={500}
-                            height={500}
+                            width={1000}
+                            height={1000}
                             alt="Raloc Travels Logo"
                             className="w-16 h-auto"
                         />
@@ -228,7 +142,7 @@ export default function ViewOffer({ params }) {
                     </div>
 
                     {openMNav && (
-                        <div className="bg-[#00b1eb] fixed top-0 left-0 h-svh w-full z-50 py-12 px-4 flex flex-col justify-between transition duration-500">
+                        <div className="bg-[#00b1eb] fixed top-0 left-0 h-svh w-full z-100 py-12 px-4 flex flex-col justify-between transition duration-1000">
                             <div>
                                 <div className="flex justify-end">
                                     <button
@@ -267,97 +181,62 @@ export default function ViewOffer({ params }) {
 
                 </div>
             </header>
-
-            <div className="flex justify-between sm:flex-row flex-col gap-2 sm:items-center sm:px-12 px-3 pt-4">
-                <div className="flex gap-4 items-center">
-                    <button onClick={() => router.back()} type="button" className="bg-gray-200 hover:bg-red-700 hover:text-white transition duration-500 flex items-center gap-2 rounded-md p-2 text-xs">
-                        <FontAwesomeIcon icon={faArrowLeftLong} width={20} height={20} />
-                        <span>
-                            Back
-                        </span>
-                    </button>
-                    <p className="text-sm text-gray-600">
-                        Home / Offers
-                    </p>
-                </div>
-
-                <div className="flex justify-between gap-2">
-                    <button onClick={() => sharePage()} type="button" className="flex items-center gap-1.5 bg-gray-200 hover:bg-black hover:text-white transition duration-500 p-2 rounded-md text-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
-                        </svg>
-
-                        <span>
-                            Share
-                        </span>
-                    </button>
-
-                    <button
-                        onClick={() => setApply(true)}
-                        type="button"
-                        className="bg-indigo-600 hover:bg-indigo-400 transition duration-500 p-2 rounded-md flex gap-1.5 text-gray-700 text-sm text-white"
-                    >
-                        <span>Apply Now</span>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="w-6 h-6 animate-bounce"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                            />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 sm:px-12 px-3 mt-3 mb-5">
-                <div>
-                    <img src={offerData?.listingImage} className="w-full sm:h-[400px] h-[250px] object-cover" />
-                </div>
-                <div>
-                    <h1 className="text-xl font-bold">
-                        {offerData?.listing}
+            <div className="sm:px-12 px-3 py-12">
+                <div className="">
+                    <h1 className="text-3xl md:text-4xl font-bold text-blue-900 mb-6">
+                        Terms and Conditions
                     </h1>
 
-                    <div className="mt-2">
-                        <span className="text-red-600 text-xs font-semibold">
-                            Description
-                        </span>
-                        <p className="text-sm">
-                            {offerData?.description}
-                        </p>
+                    <p className="text-gray-700 mb-6">
+                        These Terms and Conditions apply to the use of this website:{" "}
+                        <a
+                            href="https://www.raloctravels.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 hover:underline"
+                        >
+                            https://www.raloctravels.com
+                        </a>, including the mobile site and smartphone app platforms (iOS, Android, and Windows) published and maintained by Raloc Travels.
+                        By using this website, you agree to be legally bound by these terms and conditions. Do not use this website if you disagree with any part of the terms and conditions.
+                        By accessing or making purchases, you are considered to have read, understood, and agreed to these terms, along with our privacy policy.
+                    </p>
+
+                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">General Terms</h2>
+                    <p className="text-gray-700 mb-6">
+                        Together with its subsidiaries and affiliates, Raloc Travels operates under the laws of its founding nation. By accessing or using the Site, you agree to adhere to these terms and any future updates. Terms and conditions for sub-sites or linked pages may vary. Raloc Travels reserves the right to modify these terms without prior notice. Please review the "Terms & Conditions" page periodically for updates.
+                    </p>
+
+                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">Utilizing the Website</h2>
+                    <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                        <li>You have the legal right to enter into these Terms of Use and establish a legally enforceable obligation.</li>
+                        <li>
+                            You will adhere to the Terms of Use when using this website and use it only to make valid reservations for yourself or someone you are legally permitted to act on behalf of.
+                        </li>
+                        <li>
+                            You will provide accurate and complete information, including your full name, address, phone number, and email address. Errors in the information provided are your responsibility.
+                        </li>
+                        <li>
+                            You will secure your login credentials and are responsible for any misuse of your account.
+                        </li>
+                        <li>Raloc Travels reserves the right to deny access to this Website and its services at any time without prior warning.</li>
+                    </ul>
+
+                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">Communication Policy</h2>
+                    <p className="text-gray-700 mb-6">
+                        When you make a purchase on the Site, the Company will send you an email with the transaction's status. Ensure your email address is accurate, as Raloc Travels is not responsible for undelivered emails. Additionally, SMS alerts provided by the company are for convenience and are not a legal obligation.
+                    </p>
+
+                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">Website Content</h2>
+                    <p className="text-gray-700 mb-6">
+                        This website is for personal use only. No content, including text, images, or videos, may be reproduced, licensed, or sold for commercial purposes without authorization. Raloc Travels grants a limited, non-exclusive license to access and use this site. Interference with the site's functionality is strictly prohibited.
+                    </p>
+
+                    <div className="bg-blue-50 p-4 border-l-4 border-blue-700 text-blue-900 text-sm rounded-lg">
+                        <strong>Note:</strong> Raloc Travels reserves the right to update or modify these terms without prior notice. It is your responsibility to stay informed of any changes.
                     </div>
-
-                    <div className="mt-3">
-                        <span className="text-red-600 text-xs font-semibold">
-                            Deadline
-                        </span>
-                        <p className="text-sm">
-                            {new Date(offerData?.deadline).toDateString()}
-                        </p>
-                    </div>
-
-                    <div className="mt-3">
-                        <span className="text-red-600 text-xs font-semibold">
-                            Requirements
-                        </span>
-
-                        {offerData?.requirements.map((data, index) => (<p key={index} className="text-gray-500 text-sm">
-                            {`${index + 1}. ${data}`}
-                        </p>))}
-
-                    </div>
-
                 </div>
             </div>
-
             <Footer />
         </>
-    )
+    );
 }

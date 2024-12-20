@@ -1,5 +1,6 @@
 import { faInstagram } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Link from "next/link"
 
 export const Footer = () => {
     return (
@@ -44,7 +45,7 @@ export const Footer = () => {
                                     <a href="#" className="hover:underline">Privacy Policy</a>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:underline">Terms &amp; Conditions</a>
+                                    <Link href="/tos" className="hover:underline">Terms &amp; Conditions</Link>
                                 </li>
                             </ul>
                         </div>
