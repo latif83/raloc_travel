@@ -1,12 +1,12 @@
 "use client"
 import { Footer } from "@/components/footer";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
-export default function TermsOfService() {
+export default function PrivacyPolicy() {
 
     const [openMNav, setOpenMNav] = useState(false);
 
@@ -184,56 +184,97 @@ export default function TermsOfService() {
             <div className="md:px-12 px-3 py-12">
                 <div className="">
                     <h1 className="text-3xl md:text-4xl font-bold text-blue-900 mb-6">
-                        Terms and Conditions
+                        Privacy Policy - Raloc Travels
                     </h1>
 
+                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+                        How Do We Collect Data?
+                    </h2>
                     <p className="text-gray-700 mb-6">
-                        These Terms and Conditions apply to the use of this website:{" "}
-                        <a
-                            href="https://www.raloctravels.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-500 hover:underline"
-                        >
-                            https://www.raloctravels.com
-                        </a>, including the mobile site and smartphone app platforms (iOS, Android, and Windows) published and maintained by Raloc Travels.
-                        By using this website, you agree to be legally bound by these terms and conditions. Do not use this website if you disagree with any part of the terms and conditions.
-                        By accessing or making purchases, you are considered to have read, understood, and agreed to these terms, along with our privacy policy.
+                        All information related to a traveler’s booking, request, trip, or tour is securely gathered via email and stored in our database whenever a traveler or agent contacts us on behalf of their client.
                     </p>
 
-                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">General Terms</h2>
-                    <p className="text-gray-700 mb-6">
-                        Together with its subsidiaries and affiliates, Raloc Travels operates under the laws of its founding nation. By accessing or using the Site, you agree to adhere to these terms and any future updates. Terms and conditions for sub-sites or linked pages may vary. Raloc Travels reserves the right to modify these terms without prior notice. Please review the "Terms & Conditions" page periodically for updates.
+                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+                        Why and What Data Do We Collect?
+                    </h2>
+                    <p className="text-gray-700 mb-4">
+                        The following information may be gathered during account registration and booking processes:
                     </p>
-
-                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">Utilizing the Website</h2>
                     <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
-                        <li>You have the legal right to enter into these Terms of Use and establish a legally enforceable obligation.</li>
-                        <li>
-                            You will adhere to the Terms of Use when using this website and use it only to make valid reservations for yourself or someone you are legally permitted to act on behalf of.
-                        </li>
-                        <li>
-                            You will provide accurate and complete information, including your full name, address, phone number, and email address. Errors in the information provided are your responsibility.
-                        </li>
-                        <li>
-                            You will secure your login credentials and are responsible for any misuse of your account.
-                        </li>
-                        <li>Raloc Travels reserves the right to deny access to this Website and its services at any time without prior warning.</li>
+                        <li>Individual Data</li>
+                        <li>Address of Residence</li>
+                        <li>Details of the National ID card and postal address</li>
+                        <li>Details about the family</li>
+                        <li>Information for Education</li>
+                        <li>Work Experience</li>
+                        <li>Details about the parent or parents</li>
+                        <li>Subsequent Kin Details</li>
                     </ul>
 
-                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">Communication Policy</h2>
                     <p className="text-gray-700 mb-6">
-                        When you make a purchase on the Site, the Company will send you an email with the transaction's status. Ensure your email address is accurate, as Raloc Travels is not responsible for undelivered emails. Additionally, SMS alerts provided by the company are for convenience and are not a legal obligation.
+                        This information is required by our suppliers to:
+                    </p>
+                    <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                        <li>Hold temporary reservations using the traveler’s booking name.</li>
+                        <li>Inform visitors about visa requirements based on their nationality.</li>
+                        <li>Recommend age-appropriate activities and accommodations for children.</li>
+                        <li>Make personalized vacation recommendations based on hobbies, budget, and preferences.</li>
+                    </ul>
+
+                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+                        When the Confirmation Is Made
+                    </h2>
+                    <p className="text-gray-700 mb-6">
+                        Tours carry inherent risks. Personal details such as name, passport information, medical insurance details, and next of kin contact are essential for emergency response and operational purposes. Without this information, emergency response times may be compromised.
+                    </p>
+                    <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                        <li>Complete name (first name, middle name, last name)</li>
+                        <li>Passport details (nationality and number)</li>
+                        <li>Medical insurance details (policy number, emergency contact, insurance company)</li>
+                        <li>Next of Kin (contact for emergencies)</li>
+                        <li>Allergies or pre-existing medical conditions</li>
+                    </ul>
+
+                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+                        Who Do We Share This Information With?
+                    </h2>
+                    <p className="text-gray-700 mb-6">
+                        Raloc Travels uses the collected data primarily for organizing travel plans and handling emergencies. Information may be shared with subcontractors (lodging, transportation, activity providers) to ensure clients’ comfort and safety. In emergencies, information may also be shared with law enforcement, emergency response teams, or government representatives.
                     </p>
 
-                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">Website Content</h2>
+                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">Client Comments</h2>
                     <p className="text-gray-700 mb-6">
-                        This website is for personal use only. No content, including text, images, or videos, may be reproduced, licensed, or sold for commercial purposes without authorization. Raloc Travels grants a limited, non-exclusive license to access and use this site. Interference with the site's functionality is strictly prohibited.
+                        Feedback is shared with service providers to address concerns and improve services. It is also used internally to enhance consultant knowledge of destinations, products, and client expectations.
                     </p>
 
-                    <div className="bg-blue-50 p-4 border-l-4 border-blue-700 text-blue-900 text-sm rounded-lg">
-                        <strong>Note:</strong> Raloc Travels reserves the right to update or modify these terms without prior notice. It is your responsibility to stay informed of any changes.
-                    </div>
+                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+                        Duration of Data Retention
+                    </h2>
+                    <p className="text-gray-700 mb-6">
+                        Customer information forms are retained for one year after a trip. General details about the booking process may be retained for up to two years.
+                    </p>
+
+                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+                        Whom to Contact
+                    </h2>
+                    <p className="text-gray-700 mb-6">
+                        If you have any questions or concerns about how we secure your data, please contact us at:
+                    </p>
+                    <p className="text-gray-700">
+                        Email:{" "}
+                        <a
+                            href="mailto:ralocgh@gmail.com"
+                            className="text-blue-500 hover:underline"
+                        >
+                            ralocgh@gmail.com
+                        </a>
+                    </p>
+                    <p className="text-gray-700">
+                        Phone:{" "}
+                        <a href="tel:0503905535" className="text-blue-500 hover:underline">
+                            0503905535
+                        </a>
+                    </p>
                 </div>
             </div>
             <Footer />
