@@ -184,7 +184,7 @@ export default function PrivacyPolicy() {
             <div className="md:px-12 px-3 py-12">
                 <div className="">
                     <h1 className="text-3xl md:text-4xl font-bold text-blue-900 mb-6">
-                        Privacy Policy - Raloc Travels
+                        Privacy Policy
                     </h1>
 
                     <h2 className="text-2xl font-semibold text-blue-800 mb-4">
